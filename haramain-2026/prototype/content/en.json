@@ -1,0 +1,148 @@
+{
+  "lang": "en",
+  "name": "English",
+  "dir": "ltr",
+  "reviewed": true,
+  "version": "2026.09.1",
+  "source_note": "Etiquette and preparation text only from the Authority's published guidance; wording pending Authority approval.",
+  "instructions": {
+    "wait_here": "Please wait here",
+    "please_sit": "Please sit down",
+    "please_stand": "Please stand, ready to move",
+    "advance_calmly": "Move forward calmly",
+    "keep_moving": "Please keep moving",
+    "form_lines": "Please form lines",
+    "stay_with_group": "Stay with your group",
+    "next_batch_5": "Next batch in 5 minutes",
+    "slight_delay": "A short delay, thank you for your patience",
+    "keep_pass_ready": "Keep your batch pass ready",
+    "silence_please": "Silence, please",
+    "phones_away": "Please put your phones away",
+    "no_photography": "No photography, please",
+    "follow_staff": "Please follow the staff member",
+    "elderly_priority": "Priority for the elderly and people with disabilities",
+    "prepare_now": "Get ready, entry in about 10 minutes",
+    "entry_started": "Your batch is now entering",
+    "time_inside_limited": "Time inside the Rawdah is limited for everyone",
+    "exit_this_way": "Exit this way",
+    "batch_complete": "Your batch is complete, thank you"
+  },
+  "showme": [
+    {
+      "id": "elderly_sit",
+      "text": "I am elderly. May I sit down?"
+    },
+    {
+      "id": "this_place_batch",
+      "text": "Is this the place for the {lane} {time} batch?"
+    },
+    {
+      "id": "lost_group",
+      "text": "I have lost my group"
+    },
+    {
+      "id": "female_staff",
+      "text": "I need a female staff member"
+    },
+    {
+      "id": "where_exit",
+      "text": "Where is the exit?"
+    },
+    {
+      "id": "unwell",
+      "text": "I feel unwell"
+    },
+    {
+      "id": "phone_dead",
+      "text": "My phone is dead"
+    },
+    {
+      "id": "need_water",
+      "text": "I need water"
+    }
+  ],
+  "preparation": {
+    "title": "A few minutes before you enter",
+    "lines": [
+      "Enter calmly. Your slot is protected.",
+      "Keep moving with your batch, and do not stop in the corridors.",
+      "Greet the Prophet ﷺ and his two companions, Abu Bakr and Umar, in a low voice.",
+      "Time inside the Rawdah is limited for everyone; keep your prayer brief and heartfelt.",
+      "No photography inside. Phone in the pocket.",
+      "Follow the staff's silent signals."
+    ],
+    "greeting_ar": "السلام عليك يا رسول الله ورحمة الله وبركاته. السلام عليك يا أبا بكر الصديق. السلام عليك يا عمر بن الخطاب.",
+    "greeting": "Peace be upon you, O Messenger of Allah, and the mercy of Allah and His blessings. Peace be upon you, O Abu Bakr al-Siddiq. Peace be upon you, O Umar ibn al-Khattab.",
+    "source": "From the Authority's published guidance on visiting the Rawdah; wording pending Authority review."
+  },
+  "journey": {
+    "t24": "Your visit to the Rawdah is tomorrow at {slot}. Your gate: {gate}. Your gathering point: {point}. Leave the {hotel_area} area at about {depart} (about {walk_min} minutes at an unhurried pace). Your slot is protected within your window; there is no need to hurry.",
+    "t90": "In about 90 minutes: your slot is at {slot}. Leave at {depart} for {gate}, then the gathering point {point}. Bring water and your permit, and walk gently.",
+    "t30": "In about 30 minutes: your slot is at {slot}. Please head now to the gathering point {point} at {gate}. At the sorting point your permit is read once; then you move with your batch.",
+    "protected_note": "Arrive within your window; if you are late, the supervisor will place you in the next batch."
+  },
+  "ui": {
+    "app_name": "Hawnan — Gently to the Rawdah",
+    "tagline": "Your slot is protected; walk to it gently",
+    "language": "Language",
+    "tab_journey": "Journey",
+    "tab_pass": "Batch pass",
+    "tab_card": "Holding card",
+    "tab_prepare": "Preparation",
+    "journey_title": "Your journey message",
+    "journey_t24": "24 hours before",
+    "journey_t90": "90 minutes before",
+    "journey_t30": "30 minutes before",
+    "pass_title": "Your batch pass",
+    "pass_hint": "Show this code to staff at any point. It works offline.",
+    "pass_paper": "Paper copy",
+    "card_title": "Holding card",
+    "batch": "Batch",
+    "your_batch": "Your batch",
+    "point": "Holding point",
+    "gate": "Gate",
+    "lane_men": "men's",
+    "lane_women": "women's",
+    "remaining": "Remaining",
+    "about_minutes": "about {low}–{high} minutes",
+    "basis_measured": "from the measured times of the previous batches",
+    "basis_simulated": "from declared simulated times",
+    "basis_prior": "no measurements yet: declared default range",
+    "instruction_now": "Current instruction",
+    "no_instruction": "No instruction right now. Please wait calmly.",
+    "showme_title": "Show-Me cards",
+    "showme_hint": "Tap a card, then show it to a staff member",
+    "showme_back": "Back",
+    "showme_flip": "Tap to show in Arabic",
+    "state_issued": "Scheduled",
+    "state_checked_in": "Checked in",
+    "state_holding": "At the holding point",
+    "state_prepare": "Preparing to enter",
+    "state_moving": "On the way to the Rawdah",
+    "state_inside": "Inside the Rawdah",
+    "state_exited": "Visit complete",
+    "inside_dark": "Nothing on the screen inside the Rawdah",
+    "inside_phone": "Phone in the pocket",
+    "after_exit": "Your visit is complete. May it be accepted.",
+    "protected_until": "Your batch is protected until {time}",
+    "enter_title": "Enter your batch pass",
+    "enter_hint": "Scan the check-in code or paste the pass text",
+    "permit_label": "Permit reference (simulated)",
+    "pass_label": "Pass text",
+    "load": "Load",
+    "offline": "Offline: showing the last known state",
+    "updated": "Updated {time}",
+    "sim_banner": "Declared simulated permit data",
+    "leave_at": "Leave at",
+    "minutes": "minutes",
+    "greeting_label": "Greeting",
+    "no_pass_yet": "No batch pass yet. Please go to the check-in point.",
+    "change_pass": "Change pass",
+    "walk": "unhurried walk"
+  },
+  "signature": {
+    "scheme": "hmac-sha256",
+    "key_id": "team-2026",
+    "value": "b3890675d1a21c96448966a8db3fd2c88cb9189e9ce7a67288aa41b610e18c77"
+  }
+}

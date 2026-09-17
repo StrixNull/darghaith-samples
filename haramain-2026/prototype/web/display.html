@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>شاشة نقطة الانتظار</title>
+<meta name="description" content="شاشة نقطة الانتظار: الفوج الحالي والتالي والتعليمة النشطة بثلاث لغات مع رمز تصويري، بلا صوت.">
+<meta name="theme-color" content="#006868">
+<link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/hawnan.css">
+<style>
+  html, body { height: 100%; }
+  body { display: flex; flex-direction: column; min-height: 100vh; }
+  .dhead { display: flex; align-items: center; gap: 20px; padding: 14px 28px; background: var(--teal); color: #fff; }
+  .dhead .name { font-size: 30px; font-weight: 600; }
+  .dhead .name small { display: block; font-size: 15px; opacity: 0.85; font-weight: 400; }
+  .dhead .clock { margin-inline-start: auto; font-size: 40px; font-weight: 600; }
+  .dmain { flex: 1; display: grid; grid-template-columns: 1fr 1.6fr 1fr; gap: 20px; padding: 24px 28px; }
+  .panel { border: 1px solid var(--line); border-radius: 24px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .panel.now { background: var(--mint-bg); border-color: var(--mint-line); }
+  .panel .label { font-size: 22px; color: var(--slate); }
+  .panel .label small { display: block; font-size: 14px; }
+  .panel .range { font-size: 26px; margin-top: 6px; }
+  .picto.xl { margin-bottom: 14px; }
+  .instr-ar { font-size: 54px; font-weight: 600; color: var(--teal-ink); line-height: 1.3; }
+  .instr-other { font-size: 30px; line-height: 1.5; color: var(--slate); margin-top: 8px; }
+  .instr-other div { padding: 2px 0; }
+  .dfoot { display: flex; align-items: center; gap: 12px; padding: 8px 28px 14px; color: var(--muted); font-size: 15px; }
+  .pick { padding: 40px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  @media (max-width: 900px) { .dmain { grid-template-columns: 1fr; } .instr-ar { font-size: 38px; } .dhead .clock { font-size: 28px; } }
+</style>
+</head>
+<body>
+<div class="dhead"><div class="name"><span id="pname">—</span><small id="pname-en"></small></div><div class="clock num" id="clock">--:--</div></div>
+<div class="pattern"></div>
+<div class="pick hidden" id="pick"></div>
+<div class="dmain" id="main">
+  <div class="panel now"><div class="label">الفوج الحالي<small>Current batch</small></div><div class="huge-number num" id="now-num">—</div><div class="chip" id="now-state"></div></div>
+  <div class="panel"><span class="picto xl" id="picto">🕊</span><div class="instr-ar" id="instr-ar">انتظروا بطمأنينة</div><div class="instr-other" id="instr-other"></div></div>
+  <div class="panel"><div class="label">الفوج التالي<small>Next batch</small></div><div class="huge-number num" id="next-num">—</div><div class="range" id="next-range"></div><div class="muted" id="after-next"></div></div>
+</div>
+<div class="dfoot"><span class="status-dot" id="dot"></span><span id="foot-langs"></span><span class="spacer" style="flex:1"></span><span id="foot-seq"></span></div>
+<script src="/static/hawnan.js"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = H.el, point = H.qs("point");
+  var LANG_NAME = { ar: "العربية", en: "English", ur: "اردو", id: "Bahasa Indonesia", tr: "Türkçe", bn: "বাংলা", fr: "Français", ms: "Bahasa Melayu", ha: "Hausa", fa: "فارسی" };
+  var RTL = { ar: 1, ur: 1, fa: 1 };
+  function clock() { $("clock").textContent = H.madinah(); }
+  clock(); setInterval(clock, 15000);
+  if (!point) {
+    $("main").classList.add("hidden"); $("pick").classList.remove("hidden");
+    H.api("/api/points?lang=ar").then(function (r) { $("pick").innerHTML = r.points.map(function (p) { return '<a class="btn big" href="/display?point=' + p.id + '">' + H.esc(p.name_ar) + "</a>"; }).join(""); });
+    return;
+  }
+  async function refresh() {
+    try {
+      var st = await H.api("/api/point/" + encodeURIComponent(point) + "/state?lang=ar");
+      $("dot").className = "status-dot";
+      $("pname").textContent = st.point.name_ar; $("pname-en").textContent = st.point.name_en + " · " + st.point.gate_en;
+      var current = st.moving.concat(st.queue.filter(function (b) { return b.state === "prepare"; }));
+      var waiting = st.queue.filter(function (b) { return b.state !== "prepare"; });
+      var cur = current.length ? current[current.length - 1] : null;
+      $("now-num").textContent = cur ? cur.number : "—"; $("now-state").textContent = cur ? cur.state_label : "";
+      var nxt = waiting[0];
+      $("next-num").textContent = nxt ? nxt.number : "—";
+      $("next-range").textContent = nxt && nxt.range.about ? nxt.range.text : "";
+      $("after-next").textContent = waiting.slice(1, 4).length ? "ثم " + waiting.slice(1, 4).map(function (b) { return b.number; }).join(" · ") : "";
+      var fo = st.fan_out;
+      if (fo) {
+        $("picto").textContent = fo.pictogram; $("picto").className = "picto xl" + (fo.forbidden ? " forbid" : "");
+        $("instr-ar").textContent = fo.texts.ar || "";
+        var others = st.top_languages.filter(function (l) { return l !== "ar"; }).slice(0, 3);
+        $("instr-other").innerHTML = others.map(function (l) { return '<div lang="' + l + '" dir="' + (RTL[l] ? "rtl" : "ltr") + '">' + H.esc(fo.texts[l] || "") + "</div>"; }).join("");
+        $("foot-seq").textContent = "تعليمة رقم " + fo.seq + " · " + H.madinah(fo.set_at);
+      } else {
+        $("picto").textContent = "🕊"; $("picto").className = "picto xl"; $("instr-ar").textContent = "انتظروا بطمأنينة"; $("instr-other").innerHTML = ""; $("foot-seq").textContent = "";
+      }
+      $("foot-langs").textContent = "اللغات الحاضرة: " + st.top_languages.map(function (l) { return LANG_NAME[l] || l; }).join(" · ");
+    } catch (e) { $("dot").className = "status-dot off"; }
+  }
+  refresh();
+  H.poll(refresh, 3000);
+})();
+</script>
+</body>
+</html>

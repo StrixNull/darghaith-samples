@@ -1,0 +1,148 @@
+{
+  "lang": "id",
+  "name": "Bahasa Indonesia",
+  "dir": "ltr",
+  "reviewed": false,
+  "version": "2026.09.1-draft",
+  "source_note": "Team draft translation; awaiting native-speaker review.",
+  "instructions": {
+    "wait_here": "Mohon tunggu di sini",
+    "please_sit": "Silakan duduk",
+    "please_stand": "Silakan berdiri, bersiap untuk bergerak",
+    "advance_calmly": "Majulah dengan tenang",
+    "keep_moving": "Mohon terus bergerak",
+    "form_lines": "Mohon berbaris dengan rapi",
+    "stay_with_group": "Tetaplah bersama rombongan Anda",
+    "next_batch_5": "Rombongan berikutnya dalam 5 menit",
+    "slight_delay": "Ada sedikit penundaan, terima kasih atas kesabaran Anda",
+    "keep_pass_ready": "Siapkan kartu rombongan Anda",
+    "silence_please": "Mohon tenang",
+    "phones_away": "Mohon simpan ponsel Anda",
+    "no_photography": "Mohon tidak mengambil foto",
+    "follow_staff": "Mohon ikuti petugas",
+    "elderly_priority": "Prioritas untuk lansia dan penyandang disabilitas",
+    "prepare_now": "Bersiaplah, masuk dalam sekitar 10 menit",
+    "entry_started": "Rombongan Anda mulai masuk",
+    "time_inside_limited": "Waktu di dalam Raudhah terbatas untuk semua",
+    "exit_this_way": "Jalan keluar lewat sini",
+    "batch_complete": "Rombongan Anda telah selesai, terima kasih"
+  },
+  "showme": [
+    {
+      "id": "elderly_sit",
+      "text": "Saya sudah lanjut usia. Bolehkah saya duduk?"
+    },
+    {
+      "id": "this_place_batch",
+      "text": "Apakah ini tempat untuk rombongan {lane} pukul {time}?"
+    },
+    {
+      "id": "lost_group",
+      "text": "Saya terpisah dari rombongan saya"
+    },
+    {
+      "id": "female_staff",
+      "text": "Saya membutuhkan petugas perempuan"
+    },
+    {
+      "id": "where_exit",
+      "text": "Di mana pintu keluar?"
+    },
+    {
+      "id": "unwell",
+      "text": "Saya merasa tidak enak badan"
+    },
+    {
+      "id": "phone_dead",
+      "text": "Ponsel saya mati"
+    },
+    {
+      "id": "need_water",
+      "text": "Saya membutuhkan air minum"
+    }
+  ],
+  "preparation": {
+    "title": "Beberapa menit sebelum masuk",
+    "lines": [
+      "Masuklah dengan tenang. Jadwal Anda terjaga.",
+      "Terus bergerak bersama rombongan Anda, dan jangan berhenti di lorong.",
+      "Ucapkan salam kepada Nabi ﷺ dan dua sahabatnya, Abu Bakar dan Umar, dengan suara pelan.",
+      "Waktu di dalam Raudhah terbatas untuk semua; berdoalah dengan singkat dan khusyuk.",
+      "Dilarang mengambil foto di dalam. Ponsel di dalam saku.",
+      "Ikuti isyarat diam dari petugas."
+    ],
+    "greeting_ar": "السلام عليك يا رسول الله ورحمة الله وبركاته. السلام عليك يا أبا بكر الصديق. السلام عليك يا عمر بن الخطاب.",
+    "greeting": "Assalamu'alaika ya Rasulallah wa rahmatullahi wa barakatuh. Assalamu'alaika ya Abu Bakar ash-Shiddiq. Assalamu'alaika ya Umar bin Khattab.",
+    "source": "Dari panduan resmi Otoritas tentang kunjungan ke Raudhah; redaksi menunggu tinjauan Otoritas."
+  },
+  "journey": {
+    "t24": "Kunjungan Anda ke Raudhah besok pukul {slot}. Gerbang Anda: {gate}. Titik kumpul Anda: {point}. Berangkatlah dari kawasan {hotel_area} sekitar pukul {depart} (sekitar {walk_min} menit berjalan santai). Jadwal Anda terjaga dalam jendela waktu Anda; tidak perlu terburu-buru.",
+    "t90": "Sekitar 90 menit lagi: jadwal Anda pukul {slot}. Berangkat pukul {depart} menuju {gate}, lalu ke titik kumpul {point}. Bawa air minum dan izin Anda, dan berjalanlah dengan tenang.",
+    "t30": "Sekitar 30 menit lagi: jadwal Anda pukul {slot}. Silakan menuju titik kumpul {point} di {gate} sekarang. Di titik pemeriksaan, izin Anda dibaca satu kali; setelah itu Anda bergerak bersama rombongan.",
+    "protected_note": "Datanglah dalam jendela waktu Anda; jika terlambat, pengawas akan menempatkan Anda di rombongan berikutnya."
+  },
+  "ui": {
+    "app_name": "Hawnan — Dengan Tenang Menuju Raudhah",
+    "tagline": "Jadwal Anda terjaga, berjalanlah dengan tenang",
+    "language": "Bahasa",
+    "tab_journey": "Perjalanan",
+    "tab_pass": "Kartu rombongan",
+    "tab_card": "Kartu tunggu",
+    "tab_prepare": "Persiapan",
+    "journey_title": "Pesan perjalanan Anda",
+    "journey_t24": "24 jam sebelumnya",
+    "journey_t90": "90 menit sebelumnya",
+    "journey_t30": "30 menit sebelumnya",
+    "pass_title": "Kartu rombongan Anda",
+    "pass_hint": "Tunjukkan kode ini kepada petugas di titik mana pun. Berfungsi tanpa internet.",
+    "pass_paper": "Salinan kertas",
+    "card_title": "Kartu tunggu",
+    "batch": "Rombongan",
+    "your_batch": "Rombongan Anda",
+    "point": "Titik tunggu",
+    "gate": "Gerbang",
+    "lane_men": "pria",
+    "lane_women": "wanita",
+    "remaining": "Sisa waktu",
+    "about_minutes": "sekitar {low}–{high} menit",
+    "basis_measured": "dari waktu terukur rombongan sebelumnya",
+    "basis_simulated": "dari waktu simulasi yang dinyatakan",
+    "basis_prior": "belum ada pengukuran: rentang awal yang dinyatakan",
+    "instruction_now": "Instruksi saat ini",
+    "no_instruction": "Belum ada instruksi. Mohon menunggu dengan tenang.",
+    "showme_title": "Kartu «Tunjukkan»",
+    "showme_hint": "Ketuk kartu, lalu tunjukkan kepada petugas",
+    "showme_back": "Kembali",
+    "showme_flip": "Ketuk untuk tampilan bahasa Arab",
+    "state_issued": "Terjadwal",
+    "state_checked_in": "Sudah diverifikasi",
+    "state_holding": "Di titik tunggu",
+    "state_prepare": "Bersiap masuk",
+    "state_moving": "Menuju Raudhah",
+    "state_inside": "Di dalam Raudhah",
+    "state_exited": "Kunjungan selesai",
+    "inside_dark": "Tidak ada apa pun di layar di dalam Raudhah",
+    "inside_phone": "Ponsel di dalam saku",
+    "after_exit": "Kunjungan Anda selesai. Semoga diterima.",
+    "protected_until": "Rombongan Anda terjaga hingga {time}",
+    "enter_title": "Masukkan kartu rombongan Anda",
+    "enter_hint": "Pindai kode check-in atau tempel teks kartu",
+    "permit_label": "Nomor izin (simulasi)",
+    "pass_label": "Teks kartu",
+    "load": "Muat",
+    "offline": "Luring: menampilkan status terakhir yang diketahui",
+    "updated": "Diperbarui {time}",
+    "sim_banner": "Data izin simulasi yang dinyatakan",
+    "leave_at": "Berangkat pukul",
+    "minutes": "menit",
+    "greeting_label": "Ucapan salam",
+    "no_pass_yet": "Belum ada kartu rombongan. Silakan ke titik check-in.",
+    "change_pass": "Ganti kartu",
+    "walk": "berjalan santai"
+  },
+  "signature": {
+    "scheme": "hmac-sha256",
+    "key_id": "team-2026",
+    "value": "a3d3283a417fd1f4f635508c5c745febad788641741d4cf4547ba73d82d10ff5"
+  }
+}

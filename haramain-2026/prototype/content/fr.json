@@ -1,0 +1,148 @@
+{
+  "lang": "fr",
+  "name": "Français",
+  "dir": "ltr",
+  "reviewed": false,
+  "version": "2026.09.1-draft",
+  "source_note": "Team draft translation; awaiting native-speaker review.",
+  "instructions": {
+    "wait_here": "Veuillez attendre ici",
+    "please_sit": "Veuillez vous asseoir",
+    "please_stand": "Veuillez vous lever, prêts à avancer",
+    "advance_calmly": "Avancez calmement",
+    "keep_moving": "Veuillez continuer d'avancer",
+    "form_lines": "Veuillez vous mettre en files",
+    "stay_with_group": "Restez avec votre groupe",
+    "next_batch_5": "Prochain groupe dans 5 minutes",
+    "slight_delay": "Léger retard, merci de votre patience",
+    "keep_pass_ready": "Gardez votre laissez-passer de groupe à portée de main",
+    "silence_please": "Silence, s'il vous plaît",
+    "phones_away": "Veuillez ranger vos téléphones",
+    "no_photography": "Pas de photos, s'il vous plaît",
+    "follow_staff": "Veuillez suivre l'agent",
+    "elderly_priority": "Priorité aux personnes âgées et aux personnes handicapées",
+    "prepare_now": "Préparez-vous, entrée dans environ 10 minutes",
+    "entry_started": "Votre groupe entre maintenant",
+    "time_inside_limited": "Le temps dans la Rawdah est limité pour tous",
+    "exit_this_way": "Sortie par ici",
+    "batch_complete": "Votre groupe est terminé, merci"
+  },
+  "showme": [
+    {
+      "id": "elderly_sit",
+      "text": "Je suis âgé(e). Puis-je m'asseoir ?"
+    },
+    {
+      "id": "this_place_batch",
+      "text": "Est-ce ici pour le groupe {lane} de {time} ?"
+    },
+    {
+      "id": "lost_group",
+      "text": "J'ai perdu mon groupe"
+    },
+    {
+      "id": "female_staff",
+      "text": "J'ai besoin d'une agente (femme)"
+    },
+    {
+      "id": "where_exit",
+      "text": "Où est la sortie ?"
+    },
+    {
+      "id": "unwell",
+      "text": "Je ne me sens pas bien"
+    },
+    {
+      "id": "phone_dead",
+      "text": "Mon téléphone est déchargé"
+    },
+    {
+      "id": "need_water",
+      "text": "J'ai besoin d'eau"
+    }
+  ],
+  "preparation": {
+    "title": "Quelques minutes avant d'entrer",
+    "lines": [
+      "Entrez calmement. Votre créneau est protégé.",
+      "Continuez d'avancer avec votre groupe et ne vous arrêtez pas dans les couloirs.",
+      "Saluez le Prophète ﷺ et ses deux compagnons, Abou Bakr et Omar, à voix basse.",
+      "Le temps dans la Rawdah est limité pour tous ; faites une invocation brève et sincère.",
+      "Pas de photos à l'intérieur. Téléphone dans la poche.",
+      "Suivez les signaux silencieux du personnel."
+    ],
+    "greeting_ar": "السلام عليك يا رسول الله ورحمة الله وبركاته. السلام عليك يا أبا بكر الصديق. السلام عليك يا عمر بن الخطاب.",
+    "greeting": "Que la paix soit sur toi, ô Messager d'Allah, ainsi que la miséricorde d'Allah et Ses bénédictions. Que la paix soit sur toi, ô Abou Bakr as-Siddiq. Que la paix soit sur toi, ô Omar ibn al-Khattab.",
+    "source": "D'après les consignes publiées par l'Autorité pour la visite de la Rawdah ; formulation en attente de validation par l'Autorité."
+  },
+  "journey": {
+    "t24": "Votre visite de la Rawdah est demain à {slot}. Votre porte : {gate}. Votre point de rassemblement : {point}. Partez du quartier {hotel_area} vers {depart} (environ {walk_min} minutes de marche tranquille). Votre créneau est protégé dans votre fenêtre ; inutile de vous presser.",
+    "t90": "Dans environ 90 minutes : votre créneau est à {slot}. Partez à {depart} vers {gate}, puis vers le point de rassemblement {point}. Prenez de l'eau et votre permis, et marchez doucement.",
+    "t30": "Dans environ 30 minutes : votre créneau est à {slot}. Rendez-vous maintenant au point de rassemblement {point}, près de {gate}. Au point de contrôle, votre permis est lu une seule fois ; ensuite vous avancez avec votre groupe.",
+    "protected_note": "Arrivez dans votre fenêtre ; en cas de retard, le superviseur vous placera dans le groupe suivant."
+  },
+  "ui": {
+    "app_name": "Hawnan — Doucement vers la Rawdah",
+    "tagline": "Votre créneau est protégé, marchez-y sans hâte",
+    "language": "Langue",
+    "tab_journey": "Trajet",
+    "tab_pass": "Laissez-passer",
+    "tab_card": "Carte d'attente",
+    "tab_prepare": "Préparation",
+    "journey_title": "Votre message de trajet",
+    "journey_t24": "24 heures avant",
+    "journey_t90": "90 minutes avant",
+    "journey_t30": "30 minutes avant",
+    "pass_title": "Votre laissez-passer de groupe",
+    "pass_hint": "Montrez ce code au personnel à tout point de contrôle. Fonctionne hors ligne.",
+    "pass_paper": "Copie papier",
+    "card_title": "Carte d'attente",
+    "batch": "Groupe",
+    "your_batch": "Votre groupe",
+    "point": "Point d'attente",
+    "gate": "Porte",
+    "lane_men": "des hommes",
+    "lane_women": "des femmes",
+    "remaining": "Temps restant",
+    "about_minutes": "environ {low}–{high} minutes",
+    "basis_measured": "d'après les temps mesurés des groupes précédents",
+    "basis_simulated": "d'après des temps simulés déclarés",
+    "basis_prior": "pas encore de mesures : plage par défaut déclarée",
+    "instruction_now": "Consigne actuelle",
+    "no_instruction": "Aucune consigne pour le moment. Veuillez patienter calmement.",
+    "showme_title": "Cartes « Montrez-moi »",
+    "showme_hint": "Touchez une carte, puis montrez-la à un agent",
+    "showme_back": "Retour",
+    "showme_flip": "Touchez pour afficher en arabe",
+    "state_issued": "Planifié",
+    "state_checked_in": "Vérifié",
+    "state_holding": "Au point d'attente",
+    "state_prepare": "Préparation à l'entrée",
+    "state_moving": "En route vers la Rawdah",
+    "state_inside": "Dans la Rawdah",
+    "state_exited": "Visite terminée",
+    "inside_dark": "Rien à l'écran dans la Rawdah",
+    "inside_phone": "Téléphone dans la poche",
+    "after_exit": "Votre visite est terminée. Qu'elle soit acceptée.",
+    "protected_until": "Votre groupe est protégé jusqu'à {time}",
+    "enter_title": "Saisissez votre laissez-passer",
+    "enter_hint": "Scannez le code du point d'enregistrement ou collez le texte du laissez-passer",
+    "permit_label": "Référence du permis (simulée)",
+    "pass_label": "Texte du laissez-passer",
+    "load": "Charger",
+    "offline": "Hors ligne : dernier état connu",
+    "updated": "Mis à jour {time}",
+    "sim_banner": "Données de permis simulées et déclarées",
+    "leave_at": "Départ à",
+    "minutes": "minutes",
+    "greeting_label": "Formule de salutation",
+    "no_pass_yet": "Pas encore de laissez-passer. Rendez-vous au point d'enregistrement.",
+    "change_pass": "Changer de laissez-passer",
+    "walk": "marche tranquille"
+  },
+  "signature": {
+    "scheme": "hmac-sha256",
+    "key_id": "team-2026",
+    "value": "18be60ddbbfc2b9b47aee221ec47638a5cc42fd665eabf56e9e103fc944b3c99"
+  }
+}

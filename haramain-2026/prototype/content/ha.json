@@ -1,0 +1,148 @@
+{
+  "lang": "ha",
+  "name": "Hausa",
+  "dir": "ltr",
+  "reviewed": false,
+  "version": "2026.09.1-draft",
+  "source_note": "Team draft translation; awaiting native-speaker review.",
+  "instructions": {
+    "wait_here": "Don Allah ku jira a nan",
+    "please_sit": "Don Allah ku zauna",
+    "please_stand": "Don Allah ku tashi tsaye, ku shirya tafiya",
+    "advance_calmly": "Ku ci gaba a hankali",
+    "keep_moving": "Don Allah ku ci gaba da tafiya",
+    "form_lines": "Don Allah ku yi layi",
+    "stay_with_group": "Ku kasance tare da ƙungiyarku",
+    "next_batch_5": "Rukuni na gaba cikin minti 5",
+    "slight_delay": "Ɗan jinkiri kaɗan, mun gode da haƙurinku",
+    "keep_pass_ready": "Ku riƙe katin rukuninku a shirye",
+    "silence_please": "Don Allah ku yi shiru",
+    "phones_away": "Don Allah ku ajiye wayoyinku",
+    "no_photography": "Don Allah kada ku ɗauki hoto",
+    "follow_staff": "Don Allah ku bi ma'aikacin",
+    "elderly_priority": "Fifiko ga tsofaffi da masu naƙasa",
+    "prepare_now": "Ku shirya, shiga cikin kusan minti 10",
+    "entry_started": "Rukuninku yana shiga yanzu",
+    "time_inside_limited": "Lokaci a cikin Rauda yana da iyaka ga kowa",
+    "exit_this_way": "Hanyar fita ta nan",
+    "batch_complete": "Rukuninku ya kammala, mun gode"
+  },
+  "showme": [
+    {
+      "id": "elderly_sit",
+      "text": "Na tsufa. Zan iya zama?"
+    },
+    {
+      "id": "this_place_batch",
+      "text": "Wannan ne wurin rukunin {lane} na {time}?"
+    },
+    {
+      "id": "lost_group",
+      "text": "Na rasa ƙungiyata"
+    },
+    {
+      "id": "female_staff",
+      "text": "Ina buƙatar ma'aikaciya mace"
+    },
+    {
+      "id": "where_exit",
+      "text": "Ina hanyar fita?"
+    },
+    {
+      "id": "unwell",
+      "text": "Ba ni da lafiya"
+    },
+    {
+      "id": "phone_dead",
+      "text": "Wayata ta mutu"
+    },
+    {
+      "id": "need_water",
+      "text": "Ina buƙatar ruwa"
+    }
+  ],
+  "preparation": {
+    "title": "'Yan mintuna kafin shiga",
+    "lines": [
+      "Ku shiga a natse. Lokacinku a tsare yake.",
+      "Ku ci gaba da tafiya tare da rukuninku, kada ku tsaya a hanyoyi.",
+      "Ku gaisar da Annabi ﷺ da sahabbansa biyu, Abubakar da Umar, a ƙasan murya.",
+      "Lokaci a cikin Rauda yana da iyaka ga kowa; ku taƙaita addu'arku da gaskiya.",
+      "Ba a ɗaukar hoto a ciki. Waya a aljihu.",
+      "Ku bi alamun shiru na ma'aikata."
+    ],
+    "greeting_ar": "السلام عليك يا رسول الله ورحمة الله وبركاته. السلام عليك يا أبا بكر الصديق. السلام عليك يا عمر بن الخطاب.",
+    "greeting": "Assalamu alaika ya Rasulallah wa rahmatullahi wa barakatuh. Assalamu alaika ya Aba Bakr as-Siddiq. Assalamu alaika ya Umar ɗan Khattab.",
+    "source": "Daga jagororin da Hukuma ta buga game da ziyarar Rauda; kalmomin suna jiran nazarin Hukuma."
+  },
+  "journey": {
+    "t24": "Ziyararku zuwa Rauda gobe ce da ƙarfe {slot}. Ƙofarku: {gate}. Wurin taruwarku: {point}. Ku tashi daga yankin {hotel_area} wajen ƙarfe {depart} (kusan minti {walk_min} na tafiya a hankali). Lokacinku a tsare yake cikin tazararku; babu buƙatar gaggawa.",
+    "t90": "Nan da kusan minti 90: lokacinku ƙarfe {slot} ne. Ku tashi da ƙarfe {depart} zuwa {gate}, sannan zuwa wurin taruwa {point}. Ku ɗauki ruwa da izininku, ku yi tafiya a hankali.",
+    "t30": "Nan da kusan minti 30: lokacinku ƙarfe {slot} ne. Don Allah ku nufi wurin taruwa {point} kusa da {gate} yanzu. A wurin dubawa za a karanta izininku sau ɗaya; sannan ku ci gaba tare da rukuninku.",
+    "protected_note": "Ku zo cikin tazararku; idan kun makara, mai kula zai saka ku a rukuni na gaba."
+  },
+  "ui": {
+    "app_name": "Hawnan — A Hankali Zuwa Rauda",
+    "tagline": "Lokacinku a tsare yake, ku yi tafiya a hankali",
+    "language": "Harshe",
+    "tab_journey": "Tafiya",
+    "tab_pass": "Katin rukuni",
+    "tab_card": "Katin jira",
+    "tab_prepare": "Shiri",
+    "journey_title": "Saƙon tafiyarku",
+    "journey_t24": "Awa 24 kafin",
+    "journey_t90": "Minti 90 kafin",
+    "journey_t30": "Minti 30 kafin",
+    "pass_title": "Katin rukuninku",
+    "pass_hint": "Ku nuna wannan lambar ga ma'aikata a kowane wuri. Yana aiki ba tare da intanet ba.",
+    "pass_paper": "Kwafin takarda",
+    "card_title": "Katin jira",
+    "batch": "Rukuni",
+    "your_batch": "Rukuninku",
+    "point": "Wurin jira",
+    "gate": "Ƙofa",
+    "lane_men": "maza",
+    "lane_women": "mata",
+    "remaining": "Sauran lokaci",
+    "about_minutes": "kusan minti {low}–{high}",
+    "basis_measured": "daga lokutan da aka auna na rukunonin baya",
+    "basis_simulated": "daga lokutan kwaikwayo da aka bayyana",
+    "basis_prior": "babu aunawa tukuna: kewayon da aka bayyana",
+    "instruction_now": "Umarni na yanzu",
+    "no_instruction": "Babu umarni a yanzu. Don Allah ku jira a natse.",
+    "showme_title": "Katunan «Nuna min»",
+    "showme_hint": "Ku taɓa kati, sannan ku nuna wa ma'aikaci",
+    "showme_back": "Koma",
+    "showme_flip": "Taɓa don nuna da Larabci",
+    "state_issued": "An tsara",
+    "state_checked_in": "An tabbatar",
+    "state_holding": "A wurin jira",
+    "state_prepare": "Ana shirin shiga",
+    "state_moving": "A kan hanya zuwa Rauda",
+    "state_inside": "A cikin Rauda",
+    "state_exited": "Ziyara ta kammala",
+    "inside_dark": "Babu komai a allo a cikin Rauda",
+    "inside_phone": "Waya a aljihu",
+    "after_exit": "Ziyararku ta kammala. Allah ya karɓa.",
+    "protected_until": "Rukuninku a tsare yake har zuwa {time}",
+    "enter_title": "Shigar da katin rukuninku",
+    "enter_hint": "Duba lambar rajista ko liƙa rubutun katin",
+    "permit_label": "Lambar izini (kwaikwayo)",
+    "pass_label": "Rubutun kati",
+    "load": "Loda",
+    "offline": "Ba a kan layi: ana nuna yanayin ƙarshe da aka sani",
+    "updated": "An sabunta {time}",
+    "sim_banner": "Bayanan izini na kwaikwayo da aka bayyana",
+    "leave_at": "Tashi da ƙarfe",
+    "minutes": "minti",
+    "greeting_label": "Kalmomin sallama",
+    "no_pass_yet": "Babu katin rukuni tukuna. Don Allah ku je wurin rajista.",
+    "change_pass": "Canza kati",
+    "walk": "tafiya a hankali"
+  },
+  "signature": {
+    "scheme": "hmac-sha256",
+    "key_id": "team-2026",
+    "value": "c3e5e1f51a48117a993aced4b8139b77f0751a348d1937f020edea0e18eff443"
+  }
+}

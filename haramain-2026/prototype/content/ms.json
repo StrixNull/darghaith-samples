@@ -1,0 +1,148 @@
+{
+  "lang": "ms",
+  "name": "Bahasa Melayu",
+  "dir": "ltr",
+  "reviewed": false,
+  "version": "2026.09.1-draft",
+  "source_note": "Team draft translation; awaiting native-speaker review.",
+  "instructions": {
+    "wait_here": "Sila tunggu di sini",
+    "please_sit": "Sila duduk",
+    "please_stand": "Sila berdiri, bersedia untuk bergerak",
+    "advance_calmly": "Mara ke hadapan dengan tenang",
+    "keep_moving": "Sila terus bergerak",
+    "form_lines": "Sila beratur dalam barisan",
+    "stay_with_group": "Kekal bersama kumpulan anda",
+    "next_batch_5": "Kumpulan seterusnya dalam 5 minit",
+    "slight_delay": "Sedikit kelewatan, terima kasih atas kesabaran anda",
+    "keep_pass_ready": "Sediakan pas kumpulan anda",
+    "silence_please": "Sila senyap",
+    "phones_away": "Sila simpan telefon anda",
+    "no_photography": "Sila jangan mengambil gambar",
+    "follow_staff": "Sila ikut petugas",
+    "elderly_priority": "Keutamaan untuk warga emas dan orang kurang upaya",
+    "prepare_now": "Bersedia, masuk dalam kira-kira 10 minit",
+    "entry_started": "Kumpulan anda kini sedang masuk",
+    "time_inside_limited": "Masa di dalam Raudhah terhad untuk semua",
+    "exit_this_way": "Jalan keluar di sini",
+    "batch_complete": "Kumpulan anda telah selesai, terima kasih"
+  },
+  "showme": [
+    {
+      "id": "elderly_sit",
+      "text": "Saya warga emas. Bolehkah saya duduk?"
+    },
+    {
+      "id": "this_place_batch",
+      "text": "Adakah ini tempat untuk kumpulan {lane} pukul {time}?"
+    },
+    {
+      "id": "lost_group",
+      "text": "Saya terpisah daripada kumpulan saya"
+    },
+    {
+      "id": "female_staff",
+      "text": "Saya memerlukan petugas wanita"
+    },
+    {
+      "id": "where_exit",
+      "text": "Di mana pintu keluar?"
+    },
+    {
+      "id": "unwell",
+      "text": "Saya berasa tidak sihat"
+    },
+    {
+      "id": "phone_dead",
+      "text": "Telefon saya kehabisan bateri"
+    },
+    {
+      "id": "need_water",
+      "text": "Saya memerlukan air"
+    }
+  ],
+  "preparation": {
+    "title": "Beberapa minit sebelum masuk",
+    "lines": [
+      "Masuklah dengan tenang. Slot anda terpelihara.",
+      "Terus bergerak bersama kumpulan anda, dan jangan berhenti di laluan.",
+      "Ucapkan salam kepada Nabi ﷺ dan dua sahabat baginda, Abu Bakar dan Umar, dengan suara perlahan.",
+      "Masa di dalam Raudhah terhad untuk semua; berdoalah dengan ringkas dan ikhlas.",
+      "Dilarang mengambil gambar di dalam. Telefon di dalam poket.",
+      "Ikut isyarat senyap daripada petugas."
+    ],
+    "greeting_ar": "السلام عليك يا رسول الله ورحمة الله وبركاته. السلام عليك يا أبا بكر الصديق. السلام عليك يا عمر بن الخطاب.",
+    "greeting": "Assalamualaika ya Rasulallah wa rahmatullahi wa barakatuh. Assalamualaika ya Abu Bakar as-Siddiq. Assalamualaika ya Umar bin al-Khattab.",
+    "source": "Daripada panduan rasmi Pihak Berkuasa tentang ziarah Raudhah; susunan kata menunggu semakan Pihak Berkuasa."
+  },
+  "journey": {
+    "t24": "Lawatan anda ke Raudhah esok pada pukul {slot}. Pintu anda: {gate}. Titik berkumpul anda: {point}. Bertolak dari kawasan {hotel_area} kira-kira pukul {depart} (kira-kira {walk_min} minit berjalan perlahan). Slot anda terpelihara dalam tempoh anda; tidak perlu tergesa-gesa.",
+    "t90": "Kira-kira 90 minit lagi: slot anda pada pukul {slot}. Bertolak pada pukul {depart} ke {gate}, kemudian ke titik berkumpul {point}. Bawa air dan permit anda, dan berjalanlah dengan tenang.",
+    "t30": "Kira-kira 30 minit lagi: slot anda pada pukul {slot}. Sila menuju ke titik berkumpul {point} di {gate} sekarang. Di titik pemeriksaan, permit anda dibaca sekali sahaja; kemudian anda bergerak bersama kumpulan anda.",
+    "protected_note": "Tibalah dalam tempoh anda; jika lewat, penyelia akan menempatkan anda dalam kumpulan seterusnya."
+  },
+  "ui": {
+    "app_name": "Hawnan — Dengan Tenang ke Raudhah",
+    "tagline": "Slot anda terpelihara, berjalanlah dengan tenang",
+    "language": "Bahasa",
+    "tab_journey": "Perjalanan",
+    "tab_pass": "Pas kumpulan",
+    "tab_card": "Kad menunggu",
+    "tab_prepare": "Persediaan",
+    "journey_title": "Mesej perjalanan anda",
+    "journey_t24": "24 jam sebelum",
+    "journey_t90": "90 minit sebelum",
+    "journey_t30": "30 minit sebelum",
+    "pass_title": "Pas kumpulan anda",
+    "pass_hint": "Tunjukkan kod ini kepada petugas di mana-mana titik. Berfungsi tanpa talian.",
+    "pass_paper": "Salinan kertas",
+    "card_title": "Kad menunggu",
+    "batch": "Kumpulan",
+    "your_batch": "Kumpulan anda",
+    "point": "Titik menunggu",
+    "gate": "Pintu",
+    "lane_men": "lelaki",
+    "lane_women": "wanita",
+    "remaining": "Baki masa",
+    "about_minutes": "kira-kira {low}–{high} minit",
+    "basis_measured": "daripada masa terukur kumpulan sebelumnya",
+    "basis_simulated": "daripada masa simulasi yang diisytiharkan",
+    "basis_prior": "belum ada ukuran: julat lalai yang diisytiharkan",
+    "instruction_now": "Arahan semasa",
+    "no_instruction": "Tiada arahan buat masa ini. Sila tunggu dengan tenang.",
+    "showme_title": "Kad «Tunjukkan»",
+    "showme_hint": "Ketik kad, kemudian tunjukkan kepada petugas",
+    "showme_back": "Kembali",
+    "showme_flip": "Ketik untuk paparan bahasa Arab",
+    "state_issued": "Dijadualkan",
+    "state_checked_in": "Telah disahkan",
+    "state_holding": "Di titik menunggu",
+    "state_prepare": "Bersedia untuk masuk",
+    "state_moving": "Menuju ke Raudhah",
+    "state_inside": "Di dalam Raudhah",
+    "state_exited": "Lawatan selesai",
+    "inside_dark": "Tiada apa-apa pada skrin di dalam Raudhah",
+    "inside_phone": "Telefon di dalam poket",
+    "after_exit": "Lawatan anda selesai. Semoga diterima.",
+    "protected_until": "Kumpulan anda terpelihara sehingga {time}",
+    "enter_title": "Masukkan pas kumpulan anda",
+    "enter_hint": "Imbas kod daftar masuk atau tampal teks pas",
+    "permit_label": "Rujukan permit (simulasi)",
+    "pass_label": "Teks pas",
+    "load": "Muat",
+    "offline": "Luar talian: memaparkan keadaan terakhir yang diketahui",
+    "updated": "Dikemas kini {time}",
+    "sim_banner": "Data permit simulasi yang diisytiharkan",
+    "leave_at": "Bertolak pada",
+    "minutes": "minit",
+    "greeting_label": "Ucapan salam",
+    "no_pass_yet": "Belum ada pas kumpulan. Sila ke titik daftar masuk.",
+    "change_pass": "Tukar pas",
+    "walk": "berjalan perlahan"
+  },
+  "signature": {
+    "scheme": "hmac-sha256",
+    "key_id": "team-2026",
+    "value": "7b80def99cc66d3833978940747513dd7fa79af28f7fc1a652bb1cac205a06b6"
+  }
+}

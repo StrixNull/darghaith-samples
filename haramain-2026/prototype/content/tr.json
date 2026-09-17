@@ -1,0 +1,148 @@
+{
+  "lang": "tr",
+  "name": "Türkçe",
+  "dir": "ltr",
+  "reviewed": false,
+  "version": "2026.09.1-draft",
+  "source_note": "Team draft translation; awaiting native-speaker review.",
+  "instructions": {
+    "wait_here": "Lütfen burada bekleyin",
+    "please_sit": "Lütfen oturun",
+    "please_stand": "Lütfen ayağa kalkın, harekete hazır olun",
+    "advance_calmly": "Sakin bir şekilde ilerleyin",
+    "keep_moving": "Lütfen yürümeye devam edin",
+    "form_lines": "Lütfen sıraya girin",
+    "stay_with_group": "Grubunuzla birlikte kalın",
+    "next_batch_5": "Sonraki grup 5 dakika içinde",
+    "slight_delay": "Kısa bir gecikme var, sabrınız için teşekkürler",
+    "keep_pass_ready": "Grup geçiş kartınızı hazır tutun",
+    "silence_please": "Lütfen sessiz olun",
+    "phones_away": "Lütfen telefonlarınızı kaldırın",
+    "no_photography": "Lütfen fotoğraf çekmeyin",
+    "follow_staff": "Lütfen görevliyi takip edin",
+    "elderly_priority": "Yaşlılar ve engelliler için öncelik",
+    "prepare_now": "Hazırlanın, yaklaşık 10 dakika içinde giriş",
+    "entry_started": "Grubunuz şimdi giriyor",
+    "time_inside_limited": "Ravza içindeki süre herkes için sınırlıdır",
+    "exit_this_way": "Çıkış bu taraftan",
+    "batch_complete": "Grubunuz tamamlandı, teşekkürler"
+  },
+  "showme": [
+    {
+      "id": "elderly_sit",
+      "text": "Yaşlıyım. Oturabilir miyim?"
+    },
+    {
+      "id": "this_place_batch",
+      "text": "Burası saat {time} {lane} grubunun yeri mi?"
+    },
+    {
+      "id": "lost_group",
+      "text": "Grubumu kaybettim"
+    },
+    {
+      "id": "female_staff",
+      "text": "Bir kadın görevliye ihtiyacım var"
+    },
+    {
+      "id": "where_exit",
+      "text": "Çıkış nerede?"
+    },
+    {
+      "id": "unwell",
+      "text": "Kendimi iyi hissetmiyorum"
+    },
+    {
+      "id": "phone_dead",
+      "text": "Telefonumun şarjı bitti"
+    },
+    {
+      "id": "need_water",
+      "text": "Suya ihtiyacım var"
+    }
+  ],
+  "preparation": {
+    "title": "Girişten birkaç dakika önce",
+    "lines": [
+      "Sakin bir şekilde girin. Randevunuz korunuyor.",
+      "Grubunuzla birlikte yürümeye devam edin, koridorlarda durmayın.",
+      "Peygamber Efendimiz'e ﷺ ve iki arkadaşı Ebu Bekir ile Ömer'e alçak sesle selam verin.",
+      "Ravza içindeki süre herkes için sınırlıdır; duanızı kısa ve içten tutun.",
+      "İçeride fotoğraf çekmeyin. Telefon cepte.",
+      "Görevlilerin sessiz işaretlerini takip edin."
+    ],
+    "greeting_ar": "السلام عليك يا رسول الله ورحمة الله وبركاته. السلام عليك يا أبا بكر الصديق. السلام عليك يا عمر بن الخطاب.",
+    "greeting": "Esselâmü aleyke yâ Resûlallah ve rahmetullâhi ve berekâtüh. Esselâmü aleyke yâ Ebâ Bekr es-Sıddîk. Esselâmü aleyke yâ Ömer ibnü'l-Hattâb.",
+    "source": "Kurumun Ravza ziyaretine ilişkin yayımlanmış rehberinden; ifadeler Kurum incelemesini beklemektedir."
+  },
+  "journey": {
+    "t24": "Ravza ziyaretiniz yarın saat {slot}. Kapınız: {gate}. Toplanma noktanız: {point}. {hotel_area} bölgesinden yaklaşık {depart} saatinde çıkın (acele etmeden yaklaşık {walk_min} dakika). Randevunuz zaman aralığınız içinde korunuyor; acele etmenize gerek yok.",
+    "t90": "Yaklaşık 90 dakika sonra: randevunuz saat {slot}. {depart} saatinde {gate} kapısına, ardından {point} toplanma noktasına doğru çıkın. Su ve izninizi yanınıza alın, sakin adımlarla yürüyün.",
+    "t30": "Yaklaşık 30 dakika sonra: randevunuz saat {slot}. Lütfen şimdi {gate} yanındaki {point} toplanma noktasına gidin. Kontrol noktasında izniniz bir kez okunur; sonra grubunuzla birlikte ilerlersiniz.",
+    "protected_note": "Zaman aralığınız içinde gelin; geç kalırsanız görevli sizi bir sonraki gruba alacaktır."
+  },
+  "ui": {
+    "app_name": "Hawnan — Ravza'ya Sükûnetle",
+    "tagline": "Randevunuz korunuyor, ona sakin adımlarla yürüyün",
+    "language": "Dil",
+    "tab_journey": "Yolculuk",
+    "tab_pass": "Grup kartı",
+    "tab_card": "Bekleme kartı",
+    "tab_prepare": "Hazırlık",
+    "journey_title": "Yolculuk mesajınız",
+    "journey_t24": "24 saat önce",
+    "journey_t90": "90 dakika önce",
+    "journey_t30": "30 dakika önce",
+    "pass_title": "Grup kartınız",
+    "pass_hint": "Bu kodu herhangi bir noktada görevliye gösterin. Çevrimdışı çalışır.",
+    "pass_paper": "Kağıt kopya",
+    "card_title": "Bekleme kartı",
+    "batch": "Grup",
+    "your_batch": "Grubunuz",
+    "point": "Bekleme noktası",
+    "gate": "Kapı",
+    "lane_men": "erkek",
+    "lane_women": "kadın",
+    "remaining": "Kalan süre",
+    "about_minutes": "yaklaşık {low}–{high} dakika",
+    "basis_measured": "önceki grupların ölçülen sürelerinden",
+    "basis_simulated": "beyan edilmiş simülasyon sürelerinden",
+    "basis_prior": "henüz ölçüm yok: beyan edilmiş varsayılan aralık",
+    "instruction_now": "Güncel talimat",
+    "no_instruction": "Şu anda talimat yok. Lütfen sakince bekleyin.",
+    "showme_title": "«Göster» kartları",
+    "showme_hint": "Bir karta dokunun, sonra görevliye gösterin",
+    "showme_back": "Geri",
+    "showme_flip": "Arapça göstermek için dokunun",
+    "state_issued": "Planlandı",
+    "state_checked_in": "Doğrulandı",
+    "state_holding": "Bekleme noktasında",
+    "state_prepare": "Girişe hazırlanıyor",
+    "state_moving": "Ravza'ya doğru",
+    "state_inside": "Ravza'nın içinde",
+    "state_exited": "Ziyaret tamamlandı",
+    "inside_dark": "Ravza'nın içinde ekranda hiçbir şey yok",
+    "inside_phone": "Telefon cepte",
+    "after_exit": "Ziyaretiniz tamamlandı. Kabul olsun.",
+    "protected_until": "Grubunuz {time} saatine kadar korunuyor",
+    "enter_title": "Grup kartınızı girin",
+    "enter_hint": "Kayıt kodunu tarayın veya kart metnini yapıştırın",
+    "permit_label": "İzin numarası (simülasyon)",
+    "pass_label": "Kart metni",
+    "load": "Yükle",
+    "offline": "Çevrimdışı: bilinen son durum gösteriliyor",
+    "updated": "Güncellendi {time}",
+    "sim_banner": "Beyan edilmiş simülasyon izin verileri",
+    "leave_at": "Çıkış saati",
+    "minutes": "dakika",
+    "greeting_label": "Selam ifadesi",
+    "no_pass_yet": "Henüz grup kartı yok. Lütfen kayıt noktasına gidin.",
+    "change_pass": "Kartı değiştir",
+    "walk": "acele etmeden yürüyüş"
+  },
+  "signature": {
+    "scheme": "hmac-sha256",
+    "key_id": "team-2026",
+    "value": "46444f915c35b584c4a8432b7f205129093bd9f25c9e7aaf9eadc2e173b23838"
+  }
+}

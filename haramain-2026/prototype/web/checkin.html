@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>محطة التحقق — الختم الصامت</title>
+<meta name="description" content="محطة نقطة الفرز: قراءة تصريح نسك مرة واحدة وإصدار تصريح فوج موقّع يُقرأ دون اتصال، مع نسخة ورقية.">
+<meta name="theme-color" content="#006868">
+<link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/hawnan.css">
+<style>
+  .cols { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  @media (min-width: 900px) { .cols { grid-template-columns: 5fr 6fr; } }
+  .samples button { display: flex; justify-content: space-between; gap: 10px; width: 100%; text-align: start; padding: 8px 12px; border: 1px solid var(--line); border-radius: 10px; background: #fff; margin-bottom: 6px; cursor: pointer; }
+  .samples button:hover { background: var(--mint-bg); }
+  .samples .ref { font-family: var(--mono); font-size: 14px; direction: ltr; }
+  .paper { border: 2px solid var(--teal); border-radius: 18px; padding: 18px; text-align: center; }
+  .paper .n { font-size: 84px; font-weight: 700; color: var(--teal); line-height: 1; }
+  .paper canvas { margin: 10px auto; display: block; max-width: 100%; height: auto; }
+  .paper .lines { font-size: 16px; line-height: 1.7; }
+  .paper .en { direction: ltr; color: var(--slate); font-size: 14px; }
+  .verify-out { font-size: 16px; }
+  @media print { body * { visibility: hidden; } #paper, #paper * { visibility: visible; } #paper { position: absolute; inset: 0; margin: 0; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="mark"><svg viewBox="0 0 128 128"><rect width="128" height="128" rx="28" fill="#006868"/><path d="M34 96V62a30 30 0 0 1 60 0v34" fill="none" stroke="#A8E8D8" stroke-width="8" stroke-linecap="round"/><circle cx="64" cy="40" r="6" fill="#C9A24D"/></svg></span><span>محطة التحقق — الختم الصامت<small>Check-in station — Silent Seal · one check, then a signed batch pass</small></span></div>
+  <span class="spacer"></span><a class="btn" href="/">الرئيسية</a>
+</header>
+<div class="pattern"></div>
+<main class="wrap">
+  <div class="cols" style="margin-top:16px">
+    <div class="stack">
+      <div class="card">
+        <h2>قراءة التصريح مرة واحدة</h2>
+        <p class="muted small">أدخلوا رقم تصريح نسك (من التغذية المحاكاة المعلنة) أو اختاروه من القائمة. القارئ الضوئي يُربط لاحقاً بالمحطة الحقيقية.</p>
+        <label class="field"><span>رقم التصريح · Permit reference</span><input type="text" id="ref" placeholder="NSK-SITI-0820" autocapitalize="characters" spellcheck="false"></label>
+        <label class="field"><span>لغة الضيف (اختياري، من التصريح افتراضياً)</span><select id="lang"><option value="">من التصريح</option></select></label>
+        <button class="btn primary big block" id="issue" type="button">تحقق وإصدار تصريح الفوج</button>
+        <p class="small" id="err" style="color:var(--danger);margin-top:8px"></p>
+      </div>
+      <div class="card">
+        <div class="section-title"><h3>تصاريح لم تُقرأ بعد</h3><span class="chip gold">محاكاة</span></div>
+        <div class="samples" id="samples"></div>
+      </div>
+      <div class="card">
+        <h3>تحقق من تصريح فوج (دون اتصال بنسك)</h3>
+        <textarea id="vpass" placeholder="HWN1:…" spellcheck="false"></textarea>
+        <button class="btn block" id="verify" type="button" style="margin-top:8px">تحقق</button>
+        <p class="verify-out" id="vout" style="margin-top:8px"></p>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card" id="result" style="display:none">
+        <div class="section-title"><h2>تصريح الفوج</h2><span class="chip" id="scheme"></span><span class="spacer"></span><button class="btn" id="print" type="button">طباعة نسخة ورقية</button></div>
+        <div class="paper" id="paper">
+          <div class="lines"><b>هَوْنًا إلى الروضة</b> · تصريح فوج <span class="en">Batch pass</span></div>
+          <div class="n num" id="p-num">—</div>
+          <div class="lines" id="p-point"></div>
+          <div class="lines" id="p-prot"></div>
+          <canvas id="p-qr"></canvas>
+          <div class="en">Show at any point · verified offline in constant time · no personal data inside</div>
+          <div class="en small" id="p-sim">بيانات تصاريح محاكاة معلنة · Simulated permit data (declared)</div>
+        </div>
+        <hr class="soft">
+        <div class="row between"><a class="btn primary" id="open-guest" href="#" target="_blank" rel="noopener">فتح بطاقة الضيف على هذا الهاتف</a><button class="btn" id="copy" type="button">نسخ نص التصريح</button></div>
+        <p class="mono small" id="p-text" style="margin-top:10px"></p>
+        <p class="muted small" id="p-range"></p>
+      </div>
+      <div class="card mint">
+        <h3>لماذا تحقق واحد؟</h3>
+        <p class="small">نص التحدي يذكر أن «أي تباين في سرعة التحقق من التصاريح يتسبب فوراً في نقاط ضغط». هنا يُقرأ تصريح نسك مرة واحدة، ثم يحمل الضيف تصريح فوج موقّعاً رقمياً بلا بيانات شخصية، تقرؤه أي نقطة لاحقة دون اتصال وفي زمن ثابت.</p>
+        <p class="small en" dir="ltr">One read of the Nusuk permit, then a signed batch pass (no PII) that every later point verifies offline in constant time.</p>
+      </div>
+    </div>
+  </div>
+  <p class="footer">بيانات تصاريح محاكاة معلنة · محطة التحقق لا تخزن أسماء ولا أرقام هواتف؛ رقم التصريح يُحفظ كبصمة مملّحة فقط</p>
+</main>
+<script src="/static/hawnan.js"></script>
+<script src="/static/qr.js"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = H.el, last = null;
+  var LANE_AR = { men: "فوج الرجال", women: "فوج النساء" };
+  H.api("/api/content/languages").then(function (r) { r.languages.forEach(function (l) { var o = document.createElement("option"); o.value = l.code; o.textContent = l.name; $("lang").appendChild(o); }); });
+  async function loadSamples() {
+    try {
+      var r = await H.api("/api/permits/sample?n=14");
+      $("samples").innerHTML = r.permits.map(function (p) { return '<button type="button" data-ref="' + H.esc(p.ref) + '"><span class="ref">' + H.esc(p.ref) + '</span><span class="muted small">' + H.esc(LANE_AR[p.lane]) + " " + p.batch_number + " · " + H.esc(p.scheduled_hhmm) + " · " + H.esc(p.lang) + (p.demo ? ' <span class="chip gold">عرض</span>' : "") + "</span></button>"; }).join("") || '<p class="muted small">قُرئت كل تصاريح العرض.</p>';
+      $("samples").querySelectorAll("button").forEach(function (b) { b.addEventListener("click", function () { $("ref").value = b.dataset.ref; issue(); }); });
+    } catch (e) {}
+  }
+  async function issue() {
+    $("err").textContent = "";
+    var ref = $("ref").value.trim().toUpperCase(); if (!ref) return;
+    try {
+      var r = await H.api("/api/checkin", { method: "POST", body: { permit_ref: ref, lang: $("lang").value || null } });
+      last = r;
+      $("result").style.display = "";
+      $("scheme").textContent = "التوقيع: " + r.scheme + (r.reissued ? " · إعادة إصدار" : "");
+      $("p-num").textContent = r.batch.number;
+      $("p-point").textContent = LANE_AR[r.batch.lane] + " · " + r.point.name_ar + " · " + r.point.gate_ar;
+      $("p-prot").textContent = "فوجكم محفوظ حتى " + r.batch.protected_hhmm + " · الموعد " + r.batch.scheduled_hhmm;
+      QR.draw($("p-qr"), r.pass, { width: 240, cssWidth: 240 });
+      $("p-text").textContent = r.pass;
+      $("p-range").textContent = r.batch.range.about ? "المتبقي التقديري الآن: " + r.batch.range.text + " (" + r.batch.range.basis_text + ")" : "";
+      $("open-guest").href = r.guest_url;
+      loadSamples();
+    } catch (e) { $("err").textContent = e.status === 404 ? "التصريح غير موجود في التغذية المحاكاة" : e.message; }
+  }
+  $("issue").addEventListener("click", issue);
+  $("ref").addEventListener("keydown", function (e) { if (e.key === "Enter") issue(); });
+  $("print").addEventListener("click", function () { window.print(); });
+  $("copy").addEventListener("click", function () { if (last && navigator.clipboard) navigator.clipboard.writeText(last.pass).catch(function () {}); });
+  $("verify").addEventListener("click", async function () {
+    var r = await H.api("/api/verify", { method: "POST", body: { pass: $("vpass").value.trim() || "x", lang: "ar" } });
+    $("vout").innerHTML = r.valid ? '<span class="chip ok">صالح</span> الفوج <b class="num">' + r.batch.number + "</b> · " + H.esc(r.point.name_ar) + " · " + H.esc(LANE_AR[r.batch.lane]) + " · محفوظ حتى " + H.esc(r.batch.protected_hhmm) : '<span class="chip danger">غير صالح</span> ' + H.esc(r.reason);
+  });
+  loadSamples();
+})();
+</script>
+</body>
+</html>

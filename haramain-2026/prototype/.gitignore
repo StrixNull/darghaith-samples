@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+hawnan.sqlite3
+hawnan.sqlite3-wal
+hawnan.sqlite3-shm
+*.sqlite3
+.venv/

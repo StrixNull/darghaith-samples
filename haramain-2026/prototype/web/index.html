@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>هَوْنًا إلى الروضة — Hawnan</title>
+<meta name="description" content="نموذج أولي عامل لطبقة ميدانية صامتة بين صدور تصريح نسك وباب الروضة الشريفة: رسالة رحلة، بطاقة انتظار صادقة، نداء صامت، ختم صامت، وتوأم رقمي من المحرك نفسه.">
+<meta name="theme-color" content="#006868">
+<link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/hawnan.css">
+<style>
+  .hero { padding: 28px 0 8px; }
+  .hero h1 { font-size: 34px; }
+  .hero .tag { font-size: 20px; color: var(--teal); }
+  .roles { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .roles a { display: block; border: 1px solid var(--mint-line); border-radius: var(--r); padding: 16px; background: #fff; box-shadow: var(--shadow); color: inherit; }
+  .roles a:hover { background: var(--mint-bg); }
+  .roles .who { font-weight: 600; color: var(--teal-ink); font-size: 18px; }
+  .roles .en { color: var(--muted); font-size: 13px; direction: ltr; text-align: left; }
+  .roles .picto { font-size: 30px; width: 1.5em; height: 1.5em; border-radius: 12px; margin-bottom: 8px; }
+  ol.steps li { margin-bottom: 8px; }
+  .bi { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  @media (min-width: 900px) { .bi { grid-template-columns: 1fr 1fr; } }
+  .en-block { direction: ltr; text-align: left; }
+  .kv { font-size: 14px; }
+  .kv b { color: var(--slate); font-weight: 500; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="mark"><svg viewBox="0 0 128 128"><rect width="128" height="128" rx="28" fill="#006868"/><path d="M34 96V62a30 30 0 0 1 60 0v34" fill="none" stroke="#A8E8D8" stroke-width="8" stroke-linecap="round"/><circle cx="64" cy="40" r="6" fill="#C9A24D"/></svg></span><span>هَوْنًا إلى الروضة<small>Hawnan — Gently to the Rawdah · فكّر للحرمين 2026</small></span></div>
+  <span class="spacer"></span>
+  <span class="chip" id="runtime">…</span>
+</header>
+<div class="pattern"></div>
+<main class="wrap">
+  <section class="hero">
+    <h1>موعدك محفوظ، فامشِ إليه هونًا</h1>
+    <p class="tag">طبقة ميدانية صامتة تملكها الهيئة وتغطي «الصندوق الأسود» بين صدور تصريح نسك وباب الروضة الشريفة.</p>
+    <div class="bi">
+      <p>رسالة رحلة بلغة الضيف قبل موعده، وتحقق واحد ثم تصريح فوج موقّع يُقرأ دون اتصال، وبطاقة انتظار صادقة تعرض رقم الفوج ومدى زمنياً بدل عدّ تنازلي، ونداء صامت من المشرف يصل إلى كل الهواتف والشاشات بعشر لغات بضغطة واحدة، على محرك تفويج واحد يشغّل الميدان ويشغّل توأماً رقمياً يثبت الأثر بالأرقام. لا صوت، لا ألعاب، لا ذكاء اصطناعي وقت التشغيل، ولا بيانات شخصية.</p>
+      <p class="en-block" lang="en">A silent field layer, owned by the Authority, covering the black box between a Nusuk permit and the door of the Rawdah: a journey message in the guest's language, one check followed by a signed batch pass verified offline, an honest holding card that shows a batch number and a time <em>range</em> instead of a countdown, and a Silent Call from the supervisor that reaches every phone and display in ten languages with one tap. One batching engine runs the field and the digital twin. No sound, no gamification, no LLM at runtime, no personal data.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title"><h2>الأدوار الأربعة</h2><span class="muted small">Four roles, five pages</span></div>
+    <div class="roles">
+      <a href="/guest?lang=id"><span class="picto">📱</span><div class="who">الضيف · هاتف</div><div class="en">Guest phone (PWA) — journey message, batch pass, holding card, Show-Me cards, preparation card, dark inside. Opens in Indonesian for Siti.</div></a>
+      <a href="/checkin"><span class="picto">🎫</span><div class="who">محطة التحقق · الختم الصامت</div><div class="en">Check-in station — one permit read, signed batch pass, paper copy, offline verification.</div></a>
+      <a href="/staff?point=W1"><span class="picto">🪧</span><div class="who">المشرف · النداء الصامت</div><div class="en">Supervisor tablet — 20 canonical instructions, one active per point, advance batches, audit log. Demo token: demo-staff-1.</div></a>
+      <a href="/display?point=W1"><span class="picto">🖥</span><div class="who">شاشة نقطة الانتظار</div><div class="en">Holding-point display — current and next batch, active instruction in the three most common languages.</div></a>
+      <a href="/ops"><span class="picto">📊</span><div class="who">غرفة القرار والتوأم الرقمي</div><div class="en">Decision room — occupancy, throughput, slowdown alerts, content review, and the digital twin (3 checks vs 1, staggered windows).</div></a>
+    </div>
+  </section>
+
+  <section class="section bi">
+    <div class="card">
+      <h2>عرض ثلاث دقائق</h2>
+      <ol class="steps">
+        <li>افتحوا <a href="/guest?lang=id&permit=NSK-SITI-0820">بطاقة الضيفة «سيتي»</a> بالإندونيسية: رسالة T-24h بالبوابة ونقطة التجمع ووقت الانطلاق.</li>
+        <li>في <a href="/checkin">محطة التحقق</a> اقرؤوا التصريح <span class="mono">NSK-SITI-0820</span> مرة واحدة → تصريح فوج موقّع + نسخة ورقية، ثم تحققوا منه بلصق نصه.</li>
+        <li>افتحوا رابط «بطاقة الضيف» على الهاتف: الفوج 14، «نحو 12–18 دقيقة»، التعليمة الحالية بالإندونيسية وبطاقات «أرني».</li>
+        <li>من <a href="/staff?point=W1">جهاز المشرف</a> اضغطوا «تقدموا بهدوء»: تتغير <a href="/display?point=W1">الشاشة</a> والهواتف في اللحظة نفسها بصمت. قدّموا الفوج 13 ثم 14 حتى «داخل»: بطاقة التهيئة ثم شاشة معتمة.</li>
+        <li>في <a href="/ops">غرفة القرار</a>: الإشغال والتدفق وتنبيه التباطؤ، ثم شغّلوا التوأم: 3 تحققات مقابل تحقق واحد، ونوافذ وصول متدرجة.</li>
+      </ol>
+    </div>
+    <div class="card en-block" lang="en">
+      <h2>What is real, what is simulated</h2>
+      <table class="t kv">
+        <tr><td><b>Batch clock, estimator, signed pass, Silent Call, Show-Me cards, preparation card, indicators, twin, audit chain</b></td><td>Real — working, unit-tested code (<span id="tests">pytest</span>)</td></tr>
+        <tr><td><b>Permit times and languages (the Nusuk feed)</b></td><td>Simulated and declared — every page shows the banner; a <code>NusukPermitFeed</code> adapter needs the Ministry</td></tr>
+        <tr><td><b>Stage timings and release intervals</b></td><td>Simulated until the Phase-0 field measurements in Madinah; the estimator says which basis it used</td></tr>
+        <tr><td><b>Etiquette and preparation text</b></td><td>Generic lines from the Authority's published guidance, pending Authority review; Arabic and English reviewed, the other eight languages are drafts flagged <code>reviewed: false</code></td></tr>
+        <tr><td><b>Gate names and the "protected slot" promise</b></td><td>Placeholders and a policy for the Authority to confirm; the default wording promises only re-batching</td></tr>
+        <tr><td><b>Signature scheme</b></td><td id="scheme">…</td></tr>
+      </table>
+    </div>
+  </section>
+  <p class="footer">جامعة الأمير مقرن · المدينة المنورة · نموذج هاكاثون فكّر للحرمين 2026 · <a href="/api/runtime">/api/runtime</a></p>
+</main>
+<script src="/static/hawnan.js"></script>
+<script>
+H.api("/api/runtime").then(function (r) {
+  H.el("runtime").textContent = "v" + r.version + " · " + r.seal.scheme + " · " + r.content.packs + " packs";
+  H.el("scheme").textContent = r.seal.scheme + (r.seal.scheme === "ed25519" ? " (cryptography available)" : " (fallback: cryptography not importable)") + " · key " + r.seal.key_id;
+}).catch(function () { H.el("runtime").textContent = "offline"; });
+</script>
+</body>
+</html>

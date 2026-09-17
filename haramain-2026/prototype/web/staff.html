@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>النداء الصامت — جهاز المشرف</title>
+<meta name="description" content="جهاز المشرف اللوحي: تعليمة واحدة نشطة لكل نقطة انتظار تصل إلى الهواتف والشاشات بعشر لغات، وتقديم الأفواج، وكل إجراء مسجّل.">
+<meta name="theme-color" content="#006868">
+<link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/hawnan.css">
+<style>
+  .points { display: flex; gap: 8px; flex-wrap: wrap; }
+  .points .btn { flex: 1 1 160px; flex-direction: column; align-items: flex-start; gap: 0; line-height: 1.3; }
+  .points .btn small { font-weight: 400; opacity: 0.8; font-size: 12px; }
+  .cols { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  @media (min-width: 900px) { .cols { grid-template-columns: 5fr 7fr; } }
+  .batch-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .batch-row .n { font-size: 34px; font-weight: 600; color: var(--teal); min-width: 56px; text-align: center; line-height: 1; }
+  .batch-row .meta { flex: 1; min-width: 0; }
+  .batch-row .meta .st-label { font-weight: 600; }
+  .instr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+  .instr-btn { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 8px; border: 1px solid var(--line); border-radius: 14px; background: #fff; cursor: pointer; text-align: center; min-height: 128px; }
+  .instr-btn:hover { background: var(--mint-bg); }
+  .instr-btn.active { border-color: var(--teal); background: var(--mint-bg); box-shadow: inset 0 0 0 2px var(--teal); }
+  .instr-btn .ar { font-weight: 600; font-size: 15px; line-height: 1.3; color: var(--teal-ink); }
+  .instr-btn .other { font-size: 12px; color: var(--muted); line-height: 1.3; }
+  .log { font-size: 14px; }
+  .log div { padding: 6px 0; border-bottom: 1px solid var(--line); display: flex; gap: 10px; }
+  .log .when { color: var(--muted); min-width: 48px; }
+  .active-now { display: flex; align-items: center; gap: 14px; }
+  .active-now .text { font-size: 22px; font-weight: 600; color: var(--teal-ink); }
+  #toast { position: fixed; bottom: 16px; inset-inline-start: 16px; background: var(--teal-ink); color: #fff; padding: 10px 16px; border-radius: 12px; font-size: 14px; opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 50; }
+  #toast.on { opacity: 1; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="mark"><svg viewBox="0 0 128 128"><rect width="128" height="128" rx="28" fill="#006868"/><path d="M34 96V62a30 30 0 0 1 60 0v34" fill="none" stroke="#A8E8D8" stroke-width="8" stroke-linecap="round"/><circle cx="64" cy="40" r="6" fill="#C9A24D"/></svg></span><span>النداء الصامت — جهاز المشرف<small>Silent Call — supervisor tablet</small></span></div>
+  <span class="spacer"></span>
+  <label class="row" style="gap:6px;font-size:13px">رمز الجهاز <input type="text" id="token" style="width:140px;min-height:36px;padding:4px 8px" value="demo-staff-1" autocomplete="off"></label>
+  <a class="btn" href="/">الرئيسية</a>
+</header>
+<div class="pattern"></div>
+<main class="wrap">
+  <div class="section">
+    <div class="section-title"><h2>نقطة الانتظار</h2><span class="muted small">Holding point</span></div>
+    <div class="points" id="points"></div>
+  </div>
+  <div class="cols">
+    <div class="stack">
+      <div class="card">
+        <div class="section-title"><h2>الأفواج</h2><span class="muted small">Batches · tap to advance</span><span class="spacer"></span><span id="langs-present" class="row" style="gap:4px"></span></div>
+        <div id="queue"></div>
+      </div>
+      <div class="card">
+        <div class="section-title"><h2>السجل</h2><span class="muted small">Audit chain</span><span id="audit-ok" class="chip ok">—</span></div>
+        <div class="log" id="log"></div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card mint">
+        <div class="section-title"><h2>التعليمة النشطة الآن</h2><span class="muted small">Active instruction</span><span class="spacer"></span><button class="btn" id="clear-btn" type="button">مسح</button></div>
+        <div class="active-now" id="active-now"><span class="picto" id="active-picto">🕊</span><span class="text" id="active-text">لا تعليمة</span></div>
+        <p class="muted small" id="active-meta"></p>
+      </div>
+      <div class="card">
+        <div class="section-title"><h2>التعليمات</h2><span class="muted small">One tap → every phone and display at this point, in its language</span></div>
+        <div class="instr-grid" id="instr"></div>
+      </div>
+    </div>
+  </div>
+  <p class="footer">كل إجراء يُسجَّل في سجل تدقيق متسلسل · بيانات تصاريح محاكاة معلنة</p>
+</main>
+<div id="toast"></div>
+<script src="/static/hawnan.js"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = H.el, S = { point: H.qs("point") || H.store.get("hawnan.staff.point", "W1"), points: [], state: null, catalogue: {}, texts: {} };
+  var LANG_NAME = { ar: "العربية", en: "English", ur: "اردو", id: "Bahasa Indonesia", tr: "Türkçe", bn: "বাংলা", fr: "Français", ms: "Bahasa Melayu", ha: "Hausa", fa: "فارسی" };
+  var NEXT_AR = { checked_in: "إلى نقطة الانتظار", holding: "بدء التهيئة", prepare: "تحرك", moving: "دخل", inside: "خرج" };
+  $("token").value = H.store.get("hawnan.staff.token", "demo-staff-1");
+  $("token").addEventListener("change", function () { H.store.set("hawnan.staff.token", $("token").value.trim()); });
+  function headers() { return { "X-Device-Token": $("token").value.trim() }; }
+  function toast(msg) { $("toast").textContent = msg; $("toast").classList.add("on"); setTimeout(function () { $("toast").classList.remove("on"); }, 1800); }
+
+  async function loadPoints() {
+    S.points = (await H.api("/api/points?lang=ar")).points;
+    $("points").innerHTML = S.points.map(function (p) { return '<button type="button" class="btn' + (p.id === S.point ? " active" : "") + '" data-id="' + p.id + '">' + H.esc(p.name_ar) + "<small>" + H.esc(p.name_en) + " · " + p.waiting_batches + " أفواج · " + p.waiting_guests + " ضيفاً</small></button>"; }).join("");
+    $("points").querySelectorAll("button").forEach(function (b) { b.addEventListener("click", function () { S.point = b.dataset.id; H.store.set("hawnan.staff.point", S.point); loadPoints(); refresh(); }); });
+  }
+  async function texts(lang) {
+    if (!S.texts[lang]) { var r = await H.api("/api/content/instructions?lang=" + lang); var m = {}; r.instructions.forEach(function (i) { m[i.id] = i.text; }); S.texts[lang] = m; if (!S.catalogue.list) S.catalogue.list = r.instructions; }
+    return S.texts[lang];
+  }
+  async function refresh() {
+    var st = await H.api("/api/point/" + S.point + "/state?lang=ar");
+    S.state = st;
+    var others = st.top_languages.filter(function (l) { return l !== "ar"; }).slice(0, 3);
+    await texts("ar"); for (var i = 0; i < others.length; i++) await texts(others[i]);
+    renderQueue(st); renderInstructions(st, others); renderActive(st, others);
+    $("langs-present").innerHTML = Object.keys(st.languages_present).sort(function (a, b) { return st.languages_present[b] - st.languages_present[a]; }).map(function (l) { return '<span class="chip slate" lang="' + l + '">' + H.esc(LANG_NAME[l] || l) + " " + st.languages_present[l] + "</span>"; }).join("");
+    loadLog();
+  }
+  function renderQueue(st) {
+    var rows = st.moving.concat(st.queue);
+    if (!rows.length) { $("queue").innerHTML = '<p class="muted">لا أفواج في هذه النقطة الآن.</p>'; return; }
+    $("queue").innerHTML = rows.map(function (b) {
+      var r = b.range && b.range.about ? b.range.text : "";
+      var next = NEXT_AR[b.state];
+      return '<div class="batch-row"><span class="n num">' + b.number + '</span><div class="meta"><span class="st ' + "st-" + b.state + '"></span> <span class="st-label">' + H.esc(b.state_label) + '</span><br><span class="muted small">' + b.guests + ' ضيفاً · ' + H.esc(b.scheduled_hhmm) + (r ? " · " + H.esc(r) : "") + '</span></div>' + (next ? '<button type="button" class="btn primary" data-adv="' + b.id + '">' + next + " ←</button>" : "") + "</div>";
+    }).join("");
+    $("queue").querySelectorAll("[data-adv]").forEach(function (b) { b.addEventListener("click", async function () { b.disabled = true; try { var r = await H.api("/api/supervisor/advance", { method: "POST", headers: headers(), body: { batch_id: b.dataset.adv, lang: "ar" } }); toast("الفوج " + r.batch.number + ": " + r.batch.state_label); } catch (e) { toast("تعذر: " + e.message); } refresh(); }); });
+  }
+  function renderInstructions(st, others) {
+    var activeId = st.active_instruction ? st.active_instruction.id : null;
+    $("instr").innerHTML = S.catalogue.list.map(function (i) {
+      var sub = others.map(function (l) { return '<span lang="' + l + '" dir="' + (["ur", "fa"].indexOf(l) >= 0 ? "rtl" : "ltr") + '">' + H.esc((S.texts[l] || {})[i.id] || "") + "</span>"; }).join("<br>");
+      return '<button type="button" class="instr-btn' + (i.id === activeId ? " active" : "") + '" data-id="' + i.id + '"><span class="picto sm' + (i.forbidden ? " forbid" : "") + '">' + i.pictogram + '</span><span class="ar">' + H.esc(S.texts.ar[i.id]) + '</span><span class="other">' + sub + "</span></button>";
+    }).join("");
+    $("instr").querySelectorAll(".instr-btn").forEach(function (b) { b.addEventListener("click", async function () { try { await H.api("/api/supervisor/instruction", { method: "POST", headers: headers(), body: { point_id: S.point, instruction_id: b.dataset.id } }); toast("أُرسلت التعليمة إلى كل الأجهزة في " + S.point); } catch (e) { toast("تعذر: " + e.message); } refresh(); }); });
+  }
+  function renderActive(st, others) {
+    var a = st.active_instruction;
+    if (!a) { $("active-picto").textContent = "🕊"; $("active-picto").className = "picto"; $("active-text").textContent = "لا تعليمة نشطة"; $("active-meta").textContent = ""; return; }
+    $("active-picto").textContent = a.pictogram; $("active-picto").className = "picto" + (a.forbidden ? " forbid" : "");
+    $("active-text").textContent = a.text;
+    $("active-meta").textContent = "منذ " + H.ago(a.set_at) + " · تسلسل " + a.seq + " · اللغات: " + st.top_languages.map(function (l) { return LANG_NAME[l] || l; }).join("، ");
+  }
+  async function loadLog() {
+    try {
+      var r = await H.api("/api/audit/recent?n=40");
+      $("audit-ok").textContent = r.ok ? "السلسلة سليمة" : "السلسلة مكسورة"; $("audit-ok").className = "chip " + (r.ok ? "ok" : "danger");
+      var rows = r.records.filter(function (x) { return !x.detail.point || x.detail.point === S.point; }).slice(0, 10);
+      $("log").innerHTML = rows.map(function (x) { return '<div><span class="when num">' + H.hhmm(x.ts) + '</span><span>' + H.esc(x.action) + " · " + H.esc(x.actor) + '</span><span class="muted small">' + H.esc(JSON.stringify(x.detail)) + "</span></div>"; }).join("") || '<p class="muted">لا إجراءات بعد.</p>';
+    } catch (e) {}
+  }
+  $("clear-btn").addEventListener("click", async function () { try { await H.api("/api/supervisor/instruction", { method: "POST", headers: headers(), body: { point_id: S.point, instruction_id: null } }); toast("أُزيلت التعليمة"); } catch (e) { toast("تعذر: " + e.message); } refresh(); });
+  loadPoints().then(refresh);
+  H.poll(async function () { await refresh(); }, 3000);
+})();
+</script>
+</body>
+</html>

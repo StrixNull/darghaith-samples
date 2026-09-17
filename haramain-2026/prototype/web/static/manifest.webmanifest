@@ -1,0 +1,13 @@
+{
+  "name": "هَوْنًا إلى الروضة — Hawnan",
+  "short_name": "Hawnan",
+  "description": "Holding card, batch pass and journey message for Rawdah visitors. Prototype with declared simulated permit data.",
+  "start_url": "/guest",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#006868",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [{ "src": "/static/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

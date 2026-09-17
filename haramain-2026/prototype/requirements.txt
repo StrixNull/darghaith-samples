@@ -1,0 +1,8 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.6
+httpx>=0.27
+pytest>=8.0
+# optional: Ed25519 for the Silent Seal (the service falls back to HMAC-SHA256 and says so in /api/runtime)
+cryptography>=41
+cffi>=1.16

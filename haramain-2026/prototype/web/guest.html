@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>هَوْنًا إلى الروضة — بطاقة الانتظار</title>
+<meta name="description" content="بطاقة الانتظار وتصريح الفوج ورسالة الرحلة لزائر الروضة الشريفة. نموذج أولي ببيانات تصاريح محاكاة معلنة.">
+<meta name="theme-color" content="#006868">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/static/icon.svg">
+<link rel="stylesheet" href="/static/hawnan.css">
+<style>
+  body { font-size: 18px; }
+  .view { display: none; }
+  .view.active { display: block; }
+  .card-hero { text-align: center; padding: 22px 16px; }
+  .card-hero .label { color: var(--slate); font-size: 15px; }
+  .instr { display: flex; align-items: center; gap: 14px; }
+  .instr .text { font-size: 24px; font-weight: 600; color: var(--teal-ink); line-height: 1.35; }
+  .showme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .showme-card { min-height: 92px; border: 1px solid var(--mint-line); border-radius: 14px; background: #fff; padding: 12px; text-align: start; cursor: pointer; font-size: 16px; line-height: 1.4; display: flex; align-items: center; }
+  .showme-card:hover { background: var(--mint-bg); }
+  .showme-full { position: fixed; inset: 0; z-index: 90; background: #fff; display: flex; flex-direction: column; padding: 60px 20px 24px; }
+  .showme-full .ar { font-size: 44px; line-height: 1.4; font-weight: 600; color: var(--teal-ink); text-align: center; margin: auto 0; direction: rtl; }
+  .showme-full .own { text-align: center; color: var(--slate); font-size: 18px; margin-bottom: 24px; }
+  .inside { position: fixed; inset: 0; z-index: 80; background: #0b0f0e; color: #6f7a77; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; font-size: 18px; }
+  .inside .line2 { font-size: 15px; opacity: 0.7; margin-top: 8px; }
+  .sheet { position: fixed; inset: 0; z-index: 95; background: rgba(0, 40, 40, 0.35); display: flex; align-items: flex-end; }
+  .sheet .panel { background: #fff; width: 100%; max-height: 80vh; overflow: auto; border-radius: 20px 20px 0 0; padding: 16px 16px 28px; }
+  .langs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .langs button { min-height: 52px; font-size: 18px; border-radius: 12px; border: 1px solid var(--line); background: #fff; cursor: pointer; }
+  .langs button.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+  .qr-wrap { display: grid; place-items: center; padding: 10px 0; }
+  .qr-wrap canvas { border-radius: 12px; border: 1px solid var(--line); max-width: 100%; height: auto; }
+  .prep-lines { list-style: none; padding: 0; margin: 12px 0; }
+  .prep-lines li { padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 18px; line-height: 1.6; }
+  .greeting { font-size: 22px; line-height: 1.8; direction: rtl; text-align: center; color: var(--teal-ink); padding: 12px; background: var(--mint-bg); border-radius: 12px; }
+  .msg { white-space: pre-line; line-height: 1.7; }
+  .kv { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 16px; }
+  .kv b { color: var(--slate); font-weight: 500; }
+  .basis { font-size: 13px; color: var(--muted); }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="mark"><svg viewBox="0 0 128 128"><rect width="128" height="128" rx="28" fill="#006868"/><path d="M34 96V62a30 30 0 0 1 60 0v34" fill="none" stroke="#A8E8D8" stroke-width="8" stroke-linecap="round"/><circle cx="64" cy="40" r="6" fill="#C9A24D"/></svg></span><span><span id="app-name">هَوْنًا إلى الروضة</span><small id="tagline"></small></span></div>
+  <span class="spacer"></span>
+  <button class="btn" id="lang-btn" type="button">اللغة</button>
+</header>
+<div class="pattern"></div>
+<main class="wrap narrow" id="main">
+  <div class="row" style="margin-top:10px"><span id="offline" class="chip gold hidden"></span><span id="updated" class="chip slate hidden"></span></div>
+  <nav class="tabs" id="tabs"></nav>
+
+  <section id="view-enter" class="view">
+    <div class="card">
+      <h2 id="enter-title"></h2>
+      <p class="muted" id="enter-hint"></p>
+      <label class="field"><span id="pass-label"></span><textarea id="pass-input" placeholder="HWN1:…" spellcheck="false"></textarea></label>
+      <label class="field"><span id="permit-label"></span><input type="text" id="permit-input" placeholder="NSK-…" autocapitalize="characters" spellcheck="false"></label>
+      <button class="btn primary block big" id="load-btn" type="button"></button>
+      <p class="muted small" id="enter-err" style="margin-top:8px"></p>
+    </div>
+  </section>
+
+  <section id="view-journey" class="view">
+    <div class="card mint"><h2 id="journey-title"></h2><div class="kv" id="journey-kv"></div></div>
+    <div class="card"><span class="chip" id="j24-label"></span><p class="msg" id="j24" style="margin-top:10px"></p></div>
+    <div class="card"><span class="chip" id="j90-label"></span><p class="msg" id="j90" style="margin-top:10px"></p></div>
+    <div class="card"><span class="chip" id="j30-label"></span><p class="msg" id="j30" style="margin-top:10px"></p></div>
+    <p class="muted small" id="jnote"></p>
+  </section>
+
+  <section id="view-pass" class="view">
+    <div class="card card-hero">
+      <div class="label" id="pass-title"></div>
+      <div class="big-number num" id="pass-number">—</div>
+      <div id="pass-point" class="muted"></div>
+      <div class="qr-wrap"><canvas id="qr"></canvas></div>
+      <div id="pass-protected" class="chip"></div>
+      <p class="muted small" id="pass-hint" style="margin-top:10px"></p>
+      <details class="no-print"><summary class="muted small" id="pass-text-label"></summary><p class="mono small" id="pass-text"></p></details>
+      <div class="row no-print" style="justify-content:center;margin-top:8px"><button class="btn" id="print-btn" type="button"></button><button class="btn ghost" id="change-btn" type="button"></button></div>
+    </div>
+  </section>
+
+  <section id="view-card" class="view">
+    <div class="card card-hero">
+      <div class="label" id="card-batch-label"></div>
+      <div class="big-number num" id="card-number">—</div>
+      <div class="chip" id="card-state"></div>
+      <div id="card-point" class="muted" style="margin-top:6px"></div>
+    </div>
+    <div class="card mint" id="range-card">
+      <div class="label muted" id="remaining-label"></div>
+      <div class="range" id="range-text">—</div>
+      <div class="basis" id="range-basis"></div>
+    </div>
+    <div class="card">
+      <div class="label muted" id="instr-label"></div>
+      <div class="instr" id="instr" style="margin-top:8px"><span class="picto" id="instr-picto"></span><span class="text" id="instr-text"></span></div>
+    </div>
+    <div class="card">
+      <h3 id="showme-title"></h3>
+      <p class="muted small" id="showme-hint"></p>
+      <div class="showme-grid" id="showme-grid"></div>
+    </div>
+  </section>
+
+  <section id="view-prepare" class="view">
+    <div class="card gold">
+      <h2 id="prep-title"></h2>
+      <ul class="prep-lines" id="prep-lines"></ul>
+      <div class="label muted" id="greeting-label"></div>
+      <div class="greeting" id="greeting-ar"></div>
+      <p id="greeting-own" style="margin-top:8px"></p>
+      <p class="muted small" id="prep-source"></p>
+    </div>
+  </section>
+
+  <section id="view-exit" class="view">
+    <div class="card card-hero"><div class="big-number">✓</div><p id="after-exit" style="font-size:20px"></p></div>
+  </section>
+  <p class="footer" id="foot"></p>
+</main>
+
+<div id="showme-full" class="showme-full hidden"><div class="ar" id="sm-ar"></div><div class="own" id="sm-own"></div><button class="btn big block" id="sm-back" type="button"></button></div>
+<div id="inside" class="inside hidden"><div id="inside-1"></div><div class="line2" id="inside-2"></div></div>
+<div id="langsheet" class="sheet hidden"><div class="panel"><h2 id="lang-title" style="text-align:center">اللغة</h2><div class="langs" id="langs"></div></div></div>
+
+<script src="/static/hawnan.js"></script>
+<script src="/static/qr.js"></script>
+<script>
+(function () {
+  "use strict";
+  var LANGS_FALLBACK = [["ar","العربية","rtl"],["en","English","ltr"],["ur","اردو","rtl"],["id","Bahasa Indonesia","ltr"],["tr","Türkçe","ltr"],["bn","বাংলা","ltr"],["fr","Français","ltr"],["ms","Bahasa Melayu","ltr"],["ha","Hausa","ltr"],["fa","فارسی","rtl"]];
+  var S = { lang: H.qs("lang") || H.store.get("hawnan.lang", null), pass: H.qs("pass") || H.store.get("hawnan.pass", null), permit: H.qs("permit") || H.store.get("hawnan.permit", null),
+            ui: null, dir: "rtl", langs: [], batch: null, point: null, instruction: null, preparation: null, showme: [], journey: null, view: null, prepareShown: false, stopPoll: null };
+  var $ = H.el;
+  if (H.qs("pass") || H.qs("permit") || H.qs("lang")) { history.replaceState(null, "", "/guest"); }
+
+  function t(k, vars) { var s = (S.ui && S.ui[k]) || k; return vars ? H.fill(s, vars) : s; }
+  function show(view) {
+    S.view = view;
+    document.querySelectorAll(".view").forEach(function (v) { v.classList.toggle("active", v.id === "view-" + view); });
+    document.querySelectorAll(".tab").forEach(function (b) { b.classList.toggle("active", b.dataset.view === view); if (b.dataset.view === view && b.scrollIntoView) { try { b.scrollIntoView({ block: "nearest", inline: "center" }); } catch (e) {} } });
+    window.scrollTo(0, 0);
+  }
+  function renderTabs() {
+    var tabs = [];
+    if (S.permit) tabs.push(["journey", t("tab_journey")]);
+    if (S.pass) { tabs.push(["pass", t("tab_pass")]); tabs.push(["card", t("tab_card")]); }
+    if (S.batch && ["prepare", "moving", "inside", "exited"].indexOf(S.batch.state) >= 0) tabs.push(["prepare", t("tab_prepare")]);
+    $("tabs").innerHTML = tabs.map(function (x) { return '<button type="button" class="tab' + (S.view === x[0] ? " active" : "") + '" data-view="' + x[0] + '">' + H.esc(x[1]) + "</button>"; }).join("");
+    $("tabs").querySelectorAll(".tab").forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.view); }); });
+    $("tabs").classList.toggle("hidden", tabs.length === 0);
+  }
+  function renderChrome() {
+    document.title = t("app_name");
+    $("app-name").textContent = t("app_name"); $("tagline").textContent = t("tagline"); $("lang-btn").textContent = t("language"); $("lang-title").textContent = t("language");
+    $("enter-title").textContent = t("enter_title"); $("enter-hint").textContent = t("enter_hint"); $("pass-label").textContent = t("pass_label"); $("permit-label").textContent = t("permit_label"); $("load-btn").textContent = t("load");
+    $("journey-title").textContent = t("journey_title"); $("j24-label").textContent = t("journey_t24"); $("j90-label").textContent = t("journey_t90"); $("j30-label").textContent = t("journey_t30");
+    $("pass-title").textContent = t("pass_title"); $("pass-hint").textContent = t("pass_hint"); $("pass-text-label").textContent = t("pass_label"); $("print-btn").textContent = t("pass_paper"); $("change-btn").textContent = t("change_pass");
+    $("card-batch-label").textContent = t("your_batch"); $("remaining-label").textContent = t("remaining"); $("instr-label").textContent = t("instruction_now"); $("showme-title").textContent = t("showme_title"); $("showme-hint").textContent = t("showme_hint");
+    $("greeting-label").textContent = t("greeting_label"); $("after-exit").textContent = t("after_exit"); $("sm-back").textContent = t("showme_back");
+    $("inside-1").textContent = t("inside_dark"); $("inside-2").textContent = t("inside_phone");
+    $("foot").textContent = t("sim_banner");
+    renderTabs();
+  }
+  function renderLangs() {
+    $("langs").innerHTML = S.langs.map(function (l) { return '<button type="button" lang="' + l.code + '" dir="' + l.dir + '" data-code="' + l.code + '" class="' + (l.code === S.lang ? "active" : "") + '">' + H.esc(l.name) + "</button>"; }).join("");
+    $("langs").querySelectorAll("button").forEach(function (b) { b.addEventListener("click", function () { setLang(b.dataset.code); $("langsheet").classList.add("hidden"); }); });
+  }
+  async function loadUI(lang) {
+    var cached = H.store.get("hawnan.ui." + lang, null);
+    try { var r = await H.api("/api/content/ui?lang=" + encodeURIComponent(lang)); S.ui = r.ui; S.dir = r.dir; H.store.set("hawnan.ui." + lang, { ui: r.ui, dir: r.dir }); }
+    catch (e) { if (cached) { S.ui = cached.ui; S.dir = cached.dir; } else { S.ui = {}; S.dir = (["ar", "ur", "fa"].indexOf(lang) >= 0) ? "rtl" : "ltr"; } }
+    H.setDir(lang, S.dir);
+    renderChrome();
+  }
+  async function setLang(lang) {
+    S.lang = lang; H.store.set("hawnan.lang", lang);
+    await loadUI(lang);
+    S.showme = []; S.journey = null;
+    if (S.batch) { renderCard(); renderPass(); if (S.preparation) renderPrepare(); }
+    if (S.permit) loadJourney();
+    renderLangs();
+    tick();
+  }
+
+  // ---- journey
+  async function loadJourney() {
+    if (!S.permit) return;
+    var key = "hawnan.journey." + S.lang + "." + S.permit;
+    try { S.journey = await H.api("/api/journey/" + encodeURIComponent(S.permit) + "?lang=" + S.lang); H.store.set(key, S.journey); }
+    catch (e) { S.journey = H.store.get(key, null); if (e.status === 404) { S.permit = null; H.store.del("hawnan.permit"); renderTabs(); return; } }
+    renderJourney();
+  }
+  function renderJourney() {
+    var j = S.journey; if (!j) return;
+    $("journey-kv").innerHTML = [[t("batch"), '<span class="num">' + j.batch.number + "</span> · " + H.esc(j.batch.scheduled_hhmm)], [t("gate"), H.esc(j.point.gate)], [t("point"), H.esc(j.point.name)], [t("leave_at"), '<span class="num">' + H.esc(j.depart) + "</span> · " + j.walk_min + " " + t("minutes") + " " + t("walk")]]
+      .map(function (kv) { return "<b>" + H.esc(kv[0]) + "</b><span>" + kv[1] + "</span>"; }).join("");
+    $("j24").textContent = j.messages.t24; $("j90").textContent = j.messages.t90; $("j30").textContent = j.messages.t30; $("jnote").textContent = j.messages.protected_note;
+  }
+
+  // ---- pass
+  function renderPass() {
+    if (!S.pass || !S.batch) return;
+    $("pass-number").textContent = S.batch.number;
+    $("pass-point").textContent = S.point ? S.point.name + " · " + t("lane_" + S.batch.lane) : "";
+    $("pass-protected").textContent = t("protected_until", { time: S.batch.protected_hhmm });
+    $("pass-text").textContent = S.pass;
+    try { QR.draw($("qr"), S.pass, { width: Math.min(300, window.innerWidth - 80), cssWidth: Math.min(300, window.innerWidth - 80) }); } catch (e) { $("qr").replaceWith(Object.assign(document.createElement("p"), { className: "mono", textContent: S.pass })); }
+  }
+
+  // ---- holding card
+  function renderCard() {
+    var b = S.batch; if (!b) return;
+    $("card-number").textContent = b.number;
+    $("card-state").textContent = b.state_label;
+    $("card-point").textContent = S.point ? S.point.name + " · " + S.point.gate : "";
+    var r = b.range;
+    if (r && r.about) { $("range-card").classList.remove("hidden"); $("range-text").textContent = r.text; $("range-basis").textContent = r.basis_text; }
+    else { $("range-card").classList.add("hidden"); }
+    var ins = S.instruction;
+    if (ins) { $("instr-picto").textContent = ins.pictogram; $("instr-picto").className = "picto" + (ins.forbidden ? " forbid" : ""); $("instr-text").textContent = ins.text; }
+    else { $("instr-picto").textContent = "🕊"; $("instr-picto").className = "picto"; $("instr-text").textContent = t("no_instruction"); }
+    if (!S.showme.length) loadShowme();
+  }
+  async function loadShowme() {
+    var key = "hawnan.showme." + S.lang + "." + (S.batch ? S.batch.id : "");
+    try { S.showme = (await H.api("/api/showme?lang=" + S.lang + "&batch_id=" + encodeURIComponent(S.batch.id))).cards; H.store.set(key, S.showme); }
+    catch (e) { S.showme = H.store.get(key, []); }
+    $("showme-grid").innerHTML = S.showme.map(function (c, i) { return '<button type="button" class="showme-card" data-i="' + i + '">' + H.esc(c.text) + "</button>"; }).join("");
+    $("showme-grid").querySelectorAll(".showme-card").forEach(function (b) { b.addEventListener("click", function () { var c = S.showme[+b.dataset.i]; $("sm-ar").textContent = c.ar; $("sm-own").textContent = c.text; $("showme-full").classList.remove("hidden"); }); });
+  }
+  $("sm-back").addEventListener("click", function () { $("showme-full").classList.add("hidden"); });
+
+  // ---- preparation
+  function renderPrepare() {
+    var p = S.preparation; if (!p) return;
+    $("prep-title").textContent = p.title;
+    $("prep-lines").innerHTML = p.lines.map(function (l) { return "<li>" + H.esc(l) + "</li>"; }).join("");
+    $("greeting-ar").textContent = p.greeting_ar; $("greeting-own").textContent = p.greeting !== p.greeting_ar ? p.greeting : ""; $("prep-source").textContent = p.source;
+  }
+
+  // ---- polling
+  async function tick() {
+    if (!S.batch) return;
+    try {
+      var res = await Promise.all([H.api("/api/batch/" + encodeURIComponent(S.batch.id) + "?lang=" + S.lang), H.api("/api/point/" + encodeURIComponent(S.batch.point_id) + "/state?lang=" + S.lang)]);
+      var b = res[0], p = res[1];
+      S.batch = b.batch; S.point = b.point; S.instruction = b.active_instruction; if (b.preparation) S.preparation = b.preparation;
+      H.store.set("hawnan.last", { batch: S.batch, point: S.point, instruction: S.instruction, preparation: S.preparation, ts: Date.now() / 1000 });
+      $("offline").classList.add("hidden"); $("updated").classList.remove("hidden"); $("updated").textContent = t("updated", { time: H.hhmm(p.server_ts) });
+      applyState();
+    } catch (e) {
+      $("offline").classList.remove("hidden"); $("offline").textContent = t("offline");
+    }
+  }
+  function applyState() {
+    var st = S.batch.state;
+    renderTabs(); renderCard(); renderPass();
+    if (S.preparation) renderPrepare();
+    $("inside").classList.toggle("hidden", st !== "inside");
+    document.body.style.background = st === "inside" ? "#0b0f0e" : "";
+    if (st === "exited") { if (S.view !== "exit") show("exit"); return; }
+    if (st === "prepare" && !S.prepareShown) { S.prepareShown = true; if (S.preparation) show("prepare"); return; }
+    if (!S.view || S.view === "enter") show("card");
+  }
+  async function loadPass(passText) {
+    var v;
+    try { v = await H.api("/api/verify", { method: "POST", body: { pass: passText, lang: S.lang } }); }
+    catch (e) { var last = H.store.get("hawnan.last", null); if (last && last.batch) { S.batch = last.batch; S.point = last.point; S.instruction = last.instruction; S.preparation = last.preparation; S.pass = passText; applyState(); $("offline").classList.remove("hidden"); $("offline").textContent = t("offline"); startPoll(); } else { $("enter-err").textContent = t("offline"); } return; }
+    if (!v.valid || !v.batch) { $("enter-err").textContent = v.reason; S.pass = null; H.store.del("hawnan.pass"); show("enter"); renderTabs(); return; }
+    S.pass = passText; H.store.set("hawnan.pass", passText);
+    S.batch = v.batch; S.point = v.point;
+    await tick();
+    if (S.view === "enter" || !S.view) show("card");
+    startPoll();
+  }
+  function startPoll() { if (S.stopPoll) S.stopPoll(); S.stopPoll = H.poll(tick, 3000); }
+
+  // ---- wiring
+  $("lang-btn").addEventListener("click", function () { $("langsheet").classList.remove("hidden"); });
+  $("langsheet").addEventListener("click", function (e) { if (e.target === $("langsheet")) $("langsheet").classList.add("hidden"); });
+  $("load-btn").addEventListener("click", function () {
+    var p = $("pass-input").value.trim(), ref = $("permit-input").value.trim().toUpperCase();
+    $("enter-err").textContent = "";
+    if (ref) { S.permit = ref; H.store.set("hawnan.permit", ref); loadJourney(); renderTabs(); }
+    if (p) loadPass(p); else if (ref) show("journey");
+  });
+  $("print-btn").addEventListener("click", function () { window.print(); });
+  $("change-btn").addEventListener("click", function () { if (S.stopPoll) S.stopPoll(); S.pass = null; S.batch = null; H.store.del("hawnan.pass"); H.store.del("hawnan.last"); $("inside").classList.add("hidden"); document.body.style.background = ""; renderTabs(); show("enter"); });
+
+  (async function init() {
+    try { S.langs = (await H.api("/api/content/languages")).languages; H.store.set("hawnan.langs", S.langs); }
+    catch (e) { S.langs = H.store.get("hawnan.langs", LANGS_FALLBACK.map(function (l) { return { code: l[0], name: l[1], dir: l[2] }; })); }
+    var first = !S.lang; if (first) S.lang = "ar";
+    await loadUI(S.lang); renderLangs();
+    if (S.permit) { H.store.set("hawnan.permit", S.permit); loadJourney(); }
+    if (S.pass) { await loadPass(S.pass); } else { show(S.permit ? "journey" : "enter"); renderTabs(); }
+    if (first) $("langsheet").classList.remove("hidden");
+    if ("serviceWorker" in navigator) { try { navigator.serviceWorker.register("/sw.js").catch(function () {}); } catch (e) {} }
+  })();
+})();
+</script>
+</body>
+</html>

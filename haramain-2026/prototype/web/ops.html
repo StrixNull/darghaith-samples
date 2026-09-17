@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>غرفة القرار — هَوْنًا إلى الروضة</title>
+<meta name="description" content="لوحة غرفة القرار: إشغال نقاط الانتظار وتدفق التحقق وتنبيه التباطؤ من أحداث الأفواج فقط، وحالة مراجعة المحتوى، والتوأم الرقمي من المحرك نفسه.">
+<meta name="theme-color" content="#006868">
+<link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/hawnan.css">
+<style>
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+  .stat { border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; background: #fff; box-shadow: var(--shadow); }
+  .stat .l { color: var(--slate); font-size: 14px; }
+  .stat .v { font-size: 34px; font-weight: 600; color: var(--teal-ink); line-height: 1.15; }
+  .stat .v small { font-size: 15px; color: var(--muted); font-weight: 400; }
+  .stat .d { font-size: 13px; color: var(--muted); }
+  .points { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+  .pt .name { font-weight: 600; color: var(--teal-ink); }
+  .pt .en { font-size: 12px; color: var(--muted); }
+  .pt .occ { font-size: 28px; font-weight: 600; color: var(--teal-ink); }
+  .pt .occ small { font-size: 13px; color: var(--muted); font-weight: 400; }
+  .legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 13px; color: var(--slate); margin-top: 8px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+  /* ordinal ramp for batch progress (validated with the dataviz palette script) */
+  .o-issued { background: #7FB3A7; color: #072421; } .o-checked_in { background: #549D90; color: #062421; } .o-holding { background: #2E8A7C; color: #fff; } .o-prepare { background: #137670; color: #fff; } .o-moving { background: #07605E; color: #fff; } .o-inside { background: #004A4A; color: #fff; } .o-exited { background: #E2E4EA; color: #5a5a66; }
+  .strip { display: flex; gap: 2px; flex-wrap: wrap; }
+  .strip .c { width: 30px; height: 30px; border-radius: 6px; display: grid; place-items: center; font-size: 12px; font-weight: 600; }
+  .twin-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  .twin-form .field { margin: 0; }
+  .twin-form .field span { font-size: 12px; }
+  .bars { display: grid; gap: 8px; margin-top: 10px; }
+  .bar { display: grid; grid-template-columns: 220px 1fr 60px; align-items: center; gap: 10px; font-size: 14px; }
+  .bar .track { height: 12px; background: #E4EEEB; border-radius: 4px; }
+  .bar .track i { display: block; height: 100%; background: var(--teal); border-radius: 4px; }
+  .bar .val { text-align: end; }
+  .defs { font-size: 13px; color: var(--muted); }
+  .defs b { color: var(--slate); font-weight: 500; }
+  .review td.ok { color: var(--ok); } .review td.no { color: var(--gold-ink); }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="mark"><svg viewBox="0 0 128 128"><rect width="128" height="128" rx="28" fill="#006868"/><path d="M34 96V62a30 30 0 0 1 60 0v34" fill="none" stroke="#A8E8D8" stroke-width="8" stroke-linecap="round"/><circle cx="64" cy="40" r="6" fill="#C9A24D"/></svg></span><span>غرفة القرار<small>Decision room — from batch events only · no cameras, no persons</small></span></div>
+  <span class="spacer"></span>
+  <span class="chip" id="audit-chip">السجل: …</span>
+  <span class="chip gold">تغذية تصاريح محاكاة</span>
+  <a class="btn" href="/">الرئيسية</a>
+</header>
+<div class="pattern"></div>
+<main class="wrap">
+  <section class="section">
+    <div class="kpis" id="kpis"></div>
+  </section>
+  <section class="section">
+    <div class="section-title"><h2>نقاط الانتظار</h2><span class="muted small">Occupancy from checked-in guests present · slowdown = last release interval vs the recent median (×1.5)</span></div>
+    <div class="points" id="points"></div>
+  </section>
+  <section class="section">
+    <div class="section-title"><h2>الأفواج على مدار اليوم</h2><span class="muted small">Batch timeline per point · 24 batches, 8 min apart</span></div>
+    <div class="card" id="timeline"></div>
+    <div class="legend"><span><i class="o-issued"></i>مجدول</span><span><i class="o-checked_in"></i>تم التحقق</span><span><i class="o-holding"></i>انتظار</span><span><i class="o-prepare"></i>تهيئة</span><span><i class="o-moving"></i>تحرك</span><span><i class="o-inside"></i>داخل</span><span><i class="o-exited"></i>خرج</span></div>
+  </section>
+  <section class="section grid two">
+    <div class="card">
+      <div class="section-title"><h2>حالة مراجعة حزم المحتوى</h2><span class="muted small">Signed packs · reviewed by native speakers?</span></div>
+      <div class="table-wrap"><table class="t review" id="review"></table></div>
+      <p class="muted small">الحزم موقّعة بمفتاح الفريق؛ في الإنتاج توقّعها الهيئة. ترفض الخدمة أي حزمة غير موقّعة أو معدّلة.</p>
+    </div>
+    <div class="card">
+      <div class="section-title"><h2>التدفق والالتزام</h2><span class="muted small">Throughput per lane · batches entered within their protected window</span></div>
+      <div id="flow"></div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="card mint">
+      <div class="section-title"><h2>التوأم الرقمي</h2><span class="muted small">Same batch clock as the live service · seeded, deterministic · pure Python</span></div>
+      <div class="twin-form">
+        <label class="field"><span>تصاريح / يوم · permits/day</span><input type="number" id="f-permits" value="50000" min="100" max="100000" step="1000"></label>
+        <label class="field"><span>نقاط الانتظار · points</span><input type="number" id="f-points" value="4" min="1" max="12"></label>
+        <label class="field"><span>زمن التحقق (ث) متوسط · check mean s</span><input type="number" id="f-mean" value="20" min="3" max="120"></label>
+        <label class="field"><span>الانحراف (ث) · check sd s</span><input type="number" id="f-sd" value="10" min="0" max="60"></label>
+        <label class="field"><span>قراءة التصريح الموقّع (ث) · pass read s</span><input type="number" id="f-pass" value="2" min="1" max="30" step="0.5"></label>
+        <label class="field"><span>موظفون / محطة · servers</span><input type="number" id="f-servers" value="5" min="1" max="50"></label>
+        <label class="field"><span>حجم الفوج · batch size</span><input type="number" id="f-batch" value="50" min="5" max="500"></label>
+        <label class="field"><span>سعة الروضة · capacity</span><input type="number" id="f-cap" value="750" min="50" max="5000"></label>
+        <label class="field"><span>المكوث (دقيقة) · dwell</span><input type="number" id="f-dwell" value="11" min="3" max="30"></label>
+        <label class="field"><span>عتبة الضغط · pressure threshold</span><input type="number" id="f-thr" value="15" min="1" max="200"></label>
+        <label class="field"><span>البذرة · seed</span><input type="number" id="f-seed" value="7" min="0" max="99999"></label>
+      </div>
+      <div class="row" style="margin-top:12px"><button class="btn primary big" id="run" type="button">شغّل السيناريوهات الأربعة</button><span class="muted small" id="run-status">≈ 4 ثوانٍ عند 50,000 تصريح</span></div>
+      <div class="table-wrap" style="margin-top:12px"><table class="t" id="twin-table"></table></div>
+      <div class="bars" id="twin-bars"></div>
+      <p class="defs" style="margin-top:12px"><b>الانتظار</b> من الوصول إلى الساحة حتى الدخول (متوسط و p90). <b>أحداث الضغط</b> عدد الدقائق التي ارتفع فيها متوسط طول الطابور عند محطة تحقق بأكثر من العتبة (وكيل لنقاط الضغط عند الدمج). <b>الالتزام</b> نسبة الأفواج التي دخلت ضمن نافذتها المحمية. <b>3 تحققات</b> = تحقق كامل عند الفرز والممر والباب؛ <b>تحقق واحد</b> = تحقق كامل مرة واحدة ثم قراءة تصريح موقّع بزمن ثابت. <b>النوافذ المتدرجة</b> = الضيوف يصلون قبل موعدهم بنحو 25 دقيقة بدل دفعات الحافلات على رأس الساعة.</p>
+    </div>
+  </section>
+  <p class="footer">كل الأرقام تخرج من hawnan_core؛ بيانات التصاريح والأزمنة محاكاة معلنة حتى قياسات المرحلة صفر في المدينة</p>
+</main>
+<script src="/static/hawnan.js"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = H.el;
+  var LANE_AR = { men: "الرجال", women: "النساء" };
+  var LANG_NAME = { ar: "العربية", en: "English", ur: "اردو", id: "Bahasa Indonesia", tr: "Türkçe", bn: "বাংলা", fr: "Français", ms: "Bahasa Melayu", ha: "Hausa", fa: "فارسی" };
+  function fmt(n, d) { return n == null ? "—" : Number(n).toFixed(d == null ? 0 : d); }
+  function tile(label, value, unit, detail) { return '<div class="stat"><div class="l">' + label + '</div><div class="v">' + value + (unit ? " <small>" + unit + "</small>" : "") + '</div><div class="d">' + (detail || "") + "</div></div>"; }
+  async function indicators() {
+    var r = await H.api("/api/indicators");
+    $("audit-chip").textContent = r.audit.ok ? "سجل التدقيق سليم · " + r.audit.length : "سجل التدقيق مكسور"; $("audit-chip").className = "chip " + (r.audit.ok ? "ok" : "danger");
+    var men = r.throughput.find(function (t) { return t.lane === "men"; }), women = r.throughput.find(function (t) { return t.lane === "women"; });
+    var present = r.points.reduce(function (a, p) { return a + p.guests_present; }, 0);
+    var alerts = r.points.filter(function (p) { return p.slowdown.alert; }).length;
+    $("kpis").innerHTML = tile("ضيوف في نقاط الانتظار الآن", present, "", "Guests present, from check-in events") + tile("تدفق التحقق · الرجال", fmt(men.per_min, 1), "/ دقيقة", men.checkins + " في آخر 15 دقيقة") + tile("تدفق التحقق · النساء", fmt(women.per_min, 1), "/ دقيقة", women.checkins + " في آخر 15 دقيقة") + tile("أفواج خرجت في وقتها", r.on_time.share_pct == null ? "—" : r.on_time.share_pct + "%", "", r.on_time.on_time + " / " + r.on_time.exited + " في آخر ساعة") + tile("تنبيهات تباطؤ", alerts, "", alerts ? "⚠ راجعوا النقاط المعلّمة" : "لا تباطؤ الآن") + tile("أحداث مسجّلة", r.events_total, "", r.batches_total + " فوجاً اليوم");
+    $("points").innerHTML = r.points.map(function (p) {
+      var ratio = p.ratio, cls = ratio >= 0.85 ? "alert" : ratio >= 0.6 ? "warn" : "";
+      var s = p.slowdown, chip = s.alert ? '<span class="chip danger">⚠ تباطؤ · ' + (s.reason === "stalled" ? "توقف" : "إطلاق بطيء") + "</span>" : s.reason === "insufficient_data" ? '<span class="chip slate">بيانات غير كافية</span>' : '<span class="chip ok">✓ طبيعي</span>';
+      return '<div class="card pt"><div class="name">' + H.esc(p.name_ar) + '</div><div class="en">' + H.esc(p.name_en) + '</div><div class="occ" style="margin-top:8px">' + p.guests_present + ' <small>/ ' + p.capacity + " ضيفاً · " + Math.round(ratio * 100) + '%</small></div><div class="meter ' + cls + '"><i style="width:' + Math.min(100, Math.round(ratio * 100)) + '%"></i></div><div class="row" style="margin-top:8px">' + chip + '<span class="muted small">' + (s.median_interval_s ? "الفاصل الأخير " + Math.round(s.observed_s / 60) + " د · الوسيط " + Math.round(s.median_interval_s / 60) + " د" : "") + '</span></div><div class="muted small" style="margin-top:6px">أفواج حاضرة: ' + (p.batch_numbers.length ? p.batch_numbers.join(" · ") : "—") + "</div></div>";
+    }).join("");
+    $("review").innerHTML = "<tr><th>اللغة</th><th>مراجعة</th><th>الإصدار</th><th>البصمة</th><th>تعليمات</th></tr>" + r.content_review.map(function (p) { return '<tr><td lang="' + p.lang + '">' + H.esc(p.name) + ' <span class="muted small">' + p.lang + '</span></td><td class="' + (p.reviewed ? "ok" : "no") + '">' + (p.reviewed ? "✓ راجعها ناطق أصلي" : "✗ مسودة بانتظار المراجعة") + '</td><td class="num small">' + H.esc(p.version) + '</td><td class="mono small">' + H.esc(p.digest) + '</td><td class="num">' + p.instructions + "</td></tr>"; }).join("");
+    $("flow").innerHTML = '<table class="t"><tr><th>المسار</th><th class="num">تحققات / 15 د</th><th class="num">/ دقيقة</th></tr>' + r.throughput.map(function (t) { return "<tr><td>" + LANE_AR[t.lane] + '</td><td class="num">' + t.checkins + '</td><td class="num">' + fmt(t.per_min, 1) + "</td></tr>"; }).join("") + '</table><p class="small" style="margin-top:10px">أفواج خرجت في نافذتها خلال آخر ساعة: <b>' + (r.on_time.share_pct == null ? "—" : r.on_time.share_pct + "%") + "</b> (" + r.on_time.on_time + " من " + r.on_time.exited + ")</p>";
+  }
+  async function timeline() {
+    var pts = (await H.api("/api/points?lang=ar")).points;
+    var html = "";
+    for (var i = 0; i < pts.length; i++) {
+      var r = await H.api("/api/point/" + pts[i].id + "/batches?lang=ar");
+      html += '<div class="row" style="margin:6px 0"><span style="min-width:200px;font-weight:600;color:var(--teal-ink)">' + H.esc(pts[i].name_ar) + '</span><span class="strip">' + r.batches.map(function (b) { return '<span class="c o-' + b.state + '" title="' + H.esc("الفوج " + b.number + " · " + b.state_label + " · " + b.scheduled_hhmm + " · " + b.guests + " ضيفاً") + '">' + b.number + "</span>"; }).join("") + "</span></div>";
+    }
+    $("timeline").innerHTML = html;
+  }
+  async function runTwin() {
+    var body = { compare: true, permits_per_day: +$("f-permits").value, points: +$("f-points").value, check_time_mean_s: +$("f-mean").value, check_time_sd_s: +$("f-sd").value, pass_read_s: +$("f-pass").value, servers_per_station: +$("f-servers").value, batch_size: +$("f-batch").value, rawdah_capacity: +$("f-cap").value, dwell_min: +$("f-dwell").value, pressure_threshold: +$("f-thr").value, seed: +$("f-seed").value };
+    $("run").disabled = true; $("run-status").textContent = "يعمل…";
+    try {
+      var r = await H.api("/api/twin/run", { method: "POST", body: body });
+      var rows = r.results, best = rows.reduce(function (a, b) { return b.pressure_events < a.pressure_events ? b : a; });
+      var AR = { "3 checks · no windows": "3 تحققات · بلا نوافذ", "1 check · no windows": "تحقق واحد · بلا نوافذ", "3 checks · staggered windows": "3 تحققات · نوافذ متدرجة", "1 check · staggered windows": "تحقق واحد · نوافذ متدرجة" };
+      $("twin-table").innerHTML = "<tr><th>السيناريو</th><th class=\"num\">متوسط الانتظار (د)</th><th class=\"num\">p90 (د)</th><th class=\"num\">أحداث الضغط</th><th class=\"num\">أفواج في وقتها</th><th class=\"num\">أطول طابور</th><th class=\"num\">إعادة تفويج</th></tr>" + rows.map(function (x) { return '<tr class="' + (x === best ? "best" : "") + '"><td>' + H.esc(AR[x.label] || x.label) + ' <span class="muted small">' + H.esc(x.label) + '</span></td><td class="num">' + fmt(x.mean_wait_min, 1) + '</td><td class="num">' + fmt(x.p90_wait_min, 1) + '</td><td class="num"><b>' + x.pressure_events + '</b></td><td class="num">' + fmt(x.batches_on_time_pct, 1) + '%</td><td class="num">' + x.max_station_queue + '</td><td class="num">' + x.rebatched_guests + "</td></tr>"; }).join("");
+      var max = Math.max.apply(null, rows.map(function (x) { return x.pressure_events; })) || 1;
+      $("twin-bars").innerHTML = '<div class="muted small">أحداث الضغط لكل سيناريو (أقل = أفضل)</div>' + rows.map(function (x) { return '<div class="bar"><span>' + H.esc(AR[x.label] || x.label) + '</span><span class="track"><i style="width:' + Math.max(1, Math.round(100 * x.pressure_events / max)) + '%"></i></span><span class="val num">' + x.pressure_events + "</span></div>"; }).join("");
+      $("run-status").textContent = "اكتمل في " + r.runtime_s + " ث · " + rows[0].guests + " ضيفاً · " + rows[0].batches + " فوجاً · بذرة " + body.seed;
+    } catch (e) { $("run-status").textContent = "تعذر التشغيل: " + e.message; }
+    $("run").disabled = false;
+  }
+  $("run").addEventListener("click", runTwin);
+  indicators(); timeline();
+  H.poll(indicators, 5000); H.poll(timeline, 10000);
+})();
+</script>
+</body>
+</html>
